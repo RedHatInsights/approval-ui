@@ -9,8 +9,7 @@ import AddWorkflow from './add-stages/add-stages-wizard';
 import EditWorkflowInfo from './edit-workflow-info-modal';
 import EditWorkflowStages from './edit-workflow-stages-modal';
 import RemoveWorkflow from './remove-workflow-modal';
-import { fetchRbacGroups } from '../../redux/actions/group-actions';
-import { createRows } from './workflow-table-helpers';
+import { createRows, handleRow } from './workflow-table-helpers';
 import { TableToolbarView } from '../../presentational-components/shared/table-toolbar-view';
 import { TopToolbar, TopToolbarTitle } from '../../presentational-components/shared/top-toolbar';
 import AppTabs from '../../smart-components/app-tabs/app-tabs';
@@ -127,6 +126,7 @@ const Workflows = ({ fetchWorkflows, isLoading, pagination, history }) => {
         filterValue={ filterValue }
         setFilterValue={ setFilterValue }
         isLoading={ isLoading }
+        handleRow={ handleRow }
       />
     </Fragment>
   );
@@ -140,8 +140,7 @@ const mapStateToProps = ({ workflowReducer: { workflows, isLoading }}) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchWorkflows: apiProps => dispatch(fetchWorkflows(apiProps)),
-    fetchRbacGroups: apiProps => dispatch(fetchRbacGroups(apiProps))
+    fetchWorkflows: apiProps => dispatch(fetchWorkflows(apiProps))
   };
 };
 

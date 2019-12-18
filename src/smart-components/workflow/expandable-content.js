@@ -4,23 +4,24 @@ import { TextContent, Text, TextVariants } from '@patternfly/react-core';
 import { fetchGroupName } from '../../helpers/group/group-helper';
 import { Skeleton, SkeletonSize } from '@redhat-cloud-services/frontend-components';
 
-const ExpandableContent = ({ description, groupRefs }) => {
+const ExpandableContent = ({ isOpen, row }) => {
   const [ groupNames, setGroupNames ] = useState([]);
-  const [ isLoaded, setIsLoaded ] = useState();
+  const [ isLoaded, setIsLoaded ] = useState(true);
+  const [ expanded ] = useState(isOpen);
 
   const fetchGroupNames = () => {
-    return Promise.all(groupRefs.map((ref) => fetchGroupName(ref)));
+    return Promise.all(row.group_refs.map((ref) => fetchGroupName(ref)));
   };
 
   useEffect(() => {
-    fetchGroupNames(groupRefs).then((data) => { setGroupNames(data); setIsLoaded(true); }).catch(() => setIsLoaded(true));
-  }, []);
+    row && fetchGroupNames(row.group_refs).then((data) => { setGroupNames(data); setIsLoaded(true); }).catch(() => setIsLoaded(true));
+  }, [ expanded ]);
 
   return (
     <Fragment>
       <TextContent>
         <Text className="data-table-detail heading" component={ TextVariants.small }>Description</Text>
-        <Text className="data-table-detail content" component={ TextVariants.h5 }>{ description }</Text>
+        <Text className="data-table-detail content" component={ TextVariants.h5 }>{ row.description }</Text>
       </TextContent>
       <TextContent>
         <Fragment>
@@ -39,14 +40,13 @@ const ExpandableContent = ({ description, groupRefs }) => {
   );};
 
 ExpandableContent.defaultProps = {
-  groupNames: [],
-  iFetching: false
+  groupNames: []
 };
 
 ExpandableContent.propTypes = {
   description: PropTypes.string,
-  groupRefs: PropTypes.array.isRequired,
-  groupNames: PropTypes.array
+  row: PropTypes.object,
+  isOpen: PropTypes.bool
 };
 
 export default ExpandableContent;

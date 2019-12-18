@@ -10,7 +10,6 @@ import FilterToolbar from '../../presentational-components/shared/filter-toolbar
 import { Section } from '@redhat-cloud-services/frontend-components';
 import { TableToolbar } from '@redhat-cloud-services/frontend-components/components/TableToolbar';
 import { DataListLoader } from './loader-placeholders';
-
 /**
  * Need to optimize this component
  * There is 7 renders before first table render
@@ -33,7 +32,8 @@ export const TableToolbarView = ({
   setCheckedItems,
   filterValue,
   isLoading,
-  setFilterValue }) => {
+  setFilterValue,
+  handleRow }) => {
   const [ rows, setRows ] = useState([]);
 
   useEffect(() => {
@@ -84,7 +84,12 @@ export const TableToolbarView = ({
     return newData;
   };
 
-  const onCollapse = (_event, _index, _isOpen, { id }) => setRows((rows) => setOpen(rows, id));
+  const onCollapse = (_event, index, isOpen, { id }) => {
+    const newRows = rows;
+    const row = rows[index].tableItem;
+    newRows[index + 1].cells = handleRow(row, isOpen);
+    setRows((newRows) => setOpen(newRows, id));
+  };
 
   const selectRow = (_event, selected, index, { id } = {}) => index === -1
     ? setRows(rows.map(row => ({ ...row, selected })))
@@ -149,6 +154,7 @@ TableToolbarView.propTypes = {
   columns: propTypes.array.isRequired,
   toolbarButtons: propTypes.func,
   fetchData: propTypes.func.isRequired,
+  handleRow: propTypes.func,
   data: propTypes.array,
   pagination: propTypes.shape({
     limit: propTypes.number,
