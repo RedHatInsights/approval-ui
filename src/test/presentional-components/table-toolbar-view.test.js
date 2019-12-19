@@ -5,6 +5,7 @@ import { Table, TableHeader, TableBody, expandable } from '@patternfly/react-tab
 
 import { TableToolbarView } from '../../presentational-components/shared/table-toolbar-view';
 import { DataListLoader } from '../../presentational-components/shared/loader-placeholders';
+import ExpandableContent from '../../smart-components/workflow/expandable-content';
 
 describe('<TableToolbarView />', () => {
   let initialProps;
@@ -101,6 +102,13 @@ describe('<TableToolbarView />', () => {
       cells: [ 'name - 2', 'description' ]
     }];
 
+    const handleRow = () => [{
+      title: <ExpandableContent isOpen={ false }
+        row={ { id: '1',
+          name: 'name',
+          description: 'description',
+          group_refs: [ 'group1', 'group2' ]} }/> }];
+
     await act(async() => {
       wrapper = mount(
         <TableToolbarView
@@ -109,6 +117,7 @@ describe('<TableToolbarView />', () => {
           createRows={ createRows }
           isSelectable
           setCheckedItems={ setCheckedItems }
+          handleRow={ handleRow }
         />);
     });
 
@@ -134,12 +143,20 @@ describe('<TableToolbarView />', () => {
       cells: [ 'name - 2', 'description' ]
     }];
 
+    const handleRow = () => [{
+      title: <ExpandableContent isOpen={ false }
+        row={ { id: '1',
+          name: 'name',
+          description: 'description',
+          group_refs: [ 'group1', 'group2' ]} }/> }];
+
     await act(async() => {
       wrapper = mount(
         <TableToolbarView
           { ...initialProps }
           columns={ [{ title: 'Name', cellFormatters: [ expandable ]}, 'Description' ] }
           createRows={ createRows }
+          handleRow={ handleRow }
         />);
     });
 
