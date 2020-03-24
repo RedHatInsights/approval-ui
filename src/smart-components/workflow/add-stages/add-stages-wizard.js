@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Wizard } from '@patternfly/react-core';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
-import { addWorkflow, fetchWorkflow } from '../../../redux/actions/workflow-actions';
+import { addWorkflow } from '../../../redux/actions/workflow-actions';
 import SummaryContent from './summary-content';
-import StageInformation from './stage-information';
+import WorkflowInfoForm from './stage-information';
 import SetStages from './set-stages';
 
-const AddWorkflow = ({
-  history: { push },
-  addWorkflow,
-  addNotification,
-  postMethod,
-  rbacGroups
-}) => {
+const AddWorkflow = () => {
   const [ formData, setValues ] = useState({});
+  const dispatch = useDispatch();
+  const { push } = useHistory();
+
+  const rbacGroups = useSelector(({ groupReducer: { groups }}) => groups);
+  const [ isValid, setIsValid ] = useState(formData.name !== undefined && formData.name.length > 0);
 
   const handleChange = data => {
     setValues({ ...formData,  ...data });
   };
 
   const steps = [
-    { name: 'General information', component: <StageInformation formData={ formData } handleChange={ handleChange } /> },
+    { name: 'General information',
+      enableNext: isValid && formData.name && formData.name.length > 0,
+      component: <WorkflowInfoForm formData={ formData }
+        handleChange={ handleChange }
+        isValid={ isValid } setIsValid={ setIsValid }/> },
     { name: 'Set groups', component: <SetStages formData={ formData }
       handleChange={ handleChange } options={ rbacGroups } /> },
     { name: 'Review', component: <SummaryContent formData={ formData }
@@ -33,23 +35,24 @@ const AddWorkflow = ({
 
   const onSave = () => {
     const { name, description, wfGroups } = formData;
-    const workflowData = { name, description, group_refs: wfGroups.map(group => group.value) };
-    return addWorkflow(workflowData).then(() => postMethod()).then(() => (push('/workflows')));
+    const workflowData = { name, description, group_refs: wfGroups ? wfGroups.map(group => group.value) : []};
+    push('/workflows');
+    dispatch(addWorkflow(workflowData));
   };
 
   const onCancel = () => {
-    addNotification({
+    dispatch(addNotification({
       variant: 'warning',
-      title: 'Creating workflow',
+      title: 'Creating approval process',
       dismissable: true,
-      description: 'Creating workflow was cancelled by the user.'
-    });
+      description: 'Creating approval process was cancelled by the user.'
+    }));
     push('/workflows');
   };
 
   return (
     <Wizard
-      title={ 'Create workflow' }
+      title={ 'Create approval process' }
       isOpen
       onClose={ onCancel }
       onSave={ onSave  }
@@ -70,7 +73,7 @@ AddWorkflow.propTypes = {
   addWorkflow: PropTypes.func.isRequired,
   match: PropTypes.object,
   addNotification: PropTypes.func.isRequired,
-  fetchWorkflow: PropTypes.func.isRequired,
+  fetchWorkflowWithGroupNames: PropTypes.func.isRequired,
   postMethod: PropTypes.func.isRequired,
   rbacGroups: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]).isRequired,
@@ -78,16 +81,4 @@ AddWorkflow.propTypes = {
   })).isRequired
 };
 
-const mapStateToProps = (state) => {
-  return {
-    rbacGroups: state.groupReducer.groups
-  };
-};
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  addNotification,
-  addWorkflow,
-  fetchWorkflow
-}, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddWorkflow));
+export default AddWorkflow;
