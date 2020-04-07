@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useContext, useEffect, useReducer } from 'react';
 import { Route, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, GridItem } from '@patternfly/react-core';
@@ -10,6 +10,8 @@ import RequestTranscript from './request-transcript';
 import { fetchRequest, fetchRequestContent } from '../../../redux/actions/request-actions';
 import { RequestLoader } from '../../../presentational-components/shared/loader-placeholders';
 import { TopToolbar, TopToolbarTitle } from '../../../presentational-components/shared/top-toolbar';
+import UserContext from '../../../user-context';
+import { approvalPersona } from '../../../helpers/shared/helpers';
 
 const initialState = {
   isFetching: true
@@ -37,9 +39,11 @@ const RequestDetail = () => {
   const { id }  = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { roles: userRoles } = useContext(UserContext);
 
   useEffect(() => {
-    Promise.all([ dispatch(fetchRequest(id)), dispatch(fetchRequestContent(id)) ])
+    const persona = approvalPersona(userRoles);
+    Promise.all([ dispatch(fetchRequest(id, persona)), dispatch(fetchRequestContent(id, persona)) ])
     .then(() => stateDispatch({ type: 'setFetching', payload: false }));
   }, []);
 
@@ -54,10 +58,10 @@ const RequestDetail = () => {
     else {
       return (
         <Fragment>
-          <GridItem md={ 2 } className="detail-pane">
+          <GridItem span={ 3 } className="info-bar">
             <RequestInfoBar request={ selectedRequest } requestContent={ requestContent }/>
           </GridItem>
-          <GridItem md={ 10 } className="detail-pane">
+          <GridItem md={ 9 } className="detail-pane">
             <RequestTranscript request={ selectedRequest } url={ location.url }/>
           </GridItem>
         </Fragment>
@@ -74,7 +78,7 @@ const RequestDetail = () => {
       <Route exact path="/requests/detail/:id/deny" render={ props =>
         <ActionModal { ...props } actionType={ 'Deny' } closeUrl={ location.url } /> } />
       <TopToolbar
-        breadcrumbs={ [{ title: 'Request Queue', to: '/requests', id: 'requests' }] }
+        breadcrumbs={ [{ title: 'Request queue', to: '/requests', id: 'requests' }] }
         paddingBottom={ true }
       >
         <TopToolbarTitle title={ `Request ${id}` } />
