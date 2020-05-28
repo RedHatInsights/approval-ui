@@ -17,6 +17,8 @@ import { APPROVAL_ADMIN_PERSONA } from '../../../helpers/shared/helpers';
 import UserContext from '../../../user-context';
 import routes from '../../../constants/routes';
 import ActionModal from '../../../smart-components/request/action-modal';
+import { APPROVAL_ADMINISTRATOR_ROLE } from '../../../helpers/shared/helpers';
+import { APPROVAL_ADMINISTRATOR_ROLE, APPROVAL_APPROVER_ROLE } from '../../../helpers/shared/helpers';
 
 const ComponentWrapper = ({ store, initialEntries = [ '/requests' ], children }) => (
   <Provider store={ store } value={ { roles: []} }>
