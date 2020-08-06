@@ -180,7 +180,7 @@ const Workflows = () => {
     />
   </Fragment>;
 
-  const actionResolver = () => [
+ const actionResolver = () => [
     {
       title: intl.formatMessage(worfklowMessages.edit),
       component: 'button',
@@ -198,7 +198,6 @@ const Workflows = () => {
   const selectAllFunction = () => selectedAll
     ? stateDispatch({ type: 'unselectAll', payload: data.map(wf => wf.id) })
     : stateDispatch({ type: 'selectAll', payload: data.map(wf => wf.id) });
-
   const anyWorkflowsSelected = selectedWorkflows.length > 0;
 
   const toolbarButtons = () => <ToolbarGroup className={ `pf-u-pl-lg top-toolbar` }>
