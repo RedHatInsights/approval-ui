@@ -374,12 +374,34 @@ describe('<Workflows />', () => {
 
     const registry = new ReducerRegistry({}, [ thunk, promiseMiddleware ]);
     registry.register({ workflowReducer: applyReducerHash(workflowReducer, workflowsInitialState) });
-    const storeReal = registry.getStore();
-
+    const stateWithData = {
+      groupReducer: { ...groupsInitialState },
+      workflowReducer: {
+        ...workflowsInitialState,
+        workflows: {
+          data: [{
+            id: 'wf-id',
+            name: 'foo',
+            group_refs: [{ name: 'group-1', uuid: 'some-uuid' }]
+          }],
+          meta: {
+            count: 21,
+            limit: 10,
+            offset: 0
+          }
+        },
+        workflow: {},
+        filterValue: '',
+        isLoading: false,
+        isRecordLoading: false
+      }
+    };
+    const store = mockStore(stateWithData);
     let wrapper;
+
     await act(async()=> {
       wrapper = mount(
-        <ComponentWrapper store={ storeReal }>
+        <ComponentWrapper store={ store }>
           <Route path={ routes.workflows.index } component={ Workflows } />
         </ComponentWrapper>
       );
@@ -392,7 +414,11 @@ describe('<Workflows />', () => {
         status: 200,
         body: {
           meta: { count: 40, limit: 50, offset: 0 },
-          data: [ ]
+          data: [{
+            id: 'edit-id',
+            name: 'foo',
+            group_refs: [{ name: 'group-1', uuid: 'some-uuid' }]
+          }]
         }
       })
     );
@@ -405,7 +431,11 @@ describe('<Workflows />', () => {
         });
         return res.status(200).body({
           meta: { count: 40, limit: 10, offset: 0 },
-          data: [ ]
+          data: [{
+            id: 'edit-id',
+            name: 'foo',
+            group_refs: [{ name: 'group-1', uuid: 'some-uuid' }]
+          }]
         });
       })
     );
@@ -634,7 +664,7 @@ describe('<Workflows />', () => {
     });
 
     it('should select all workflows and delete them', async () => {
-      expect.assertions(3);
+      expect.assertions(7);
 
       let wrapper;
       await act(async()=> {
@@ -735,7 +765,7 @@ describe('<Workflows />', () => {
     });
 
     it('should select only one workflow and delete it', async () => {
-      expect.assertions(3);
+      expect.assertions(5);
 
       let wrapper;
       await act(async()=> {
