@@ -5,7 +5,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Button } from '@patternfly/react-core';
 import { sortable, wrappable, cellWidth, breakWord } from '@patternfly/react-table';
 import { useIntl } from 'react-intl';
-import { SearchIcon } from '@patternfly/react-icons';
+import { CubesIcon, SearchIcon } from '@patternfly/react-icons';
 import isEmpty from 'lodash/isEmpty';
 
 import { fetchRequests,
@@ -97,6 +97,9 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
   const isApprovalAdmin = useIsApprovalAdmin(userRoles);
   const isApprovalApprover = useIsApprovalApprover(userRoles);
 
+  const noRequestsMessage = () => (indexpath === routesLinks.allrequest) ?
+    intl.formatMessage(requestsMessages.emptyAllRequestsDescription) : intl.formatMessage(requestsMessages.emptyRequestsDescription);
+
   const updateRequests = (pagination) => {
     if (!isApprovalApprover && persona === APPROVAL_APPROVER_PERSONA) {
       stateDispatch({ type: 'setFetching', payload: false });
@@ -186,6 +189,7 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
         { isApprovalAdmin && <AppTabs/> }
       </TopToolbar>
       <TableToolbarView
+        ouiaId={ 'requests-table' }
         sortBy={ sortBy }
         onSort={ onSort }
         rows={ rows }
@@ -202,13 +206,13 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
         renderEmptyState={ () => (
           <TableEmptyState
             title={ isEmpty(filterValue)
-              ? intl.formatMessage(tableToolbarMessages.noResultsFound, { results: intl.formatMessage(requestsMessages.requests) })
+              ? intl.formatMessage(requestsMessages.emptyRequestsTitle)
               : intl.formatMessage(tableToolbarMessages.noResultsFound)
             }
-            Icon={ SearchIcon }
+            icon={ isEmpty(filterValue) ? CubesIcon : SearchIcon }
             PrimaryAction={ () =>
-              isEmpty(filterValue) ? null : (
-                <Button onClick={ clearFilters } variant="link">
+              isEmpty(filterValue) ? noRequestsMessage() : (
+                <Button onClick={ clearFilters } variant="link" ouiaId={ `clear-filter-requests` }>
                   { intl.formatMessage(tableToolbarMessages.clearAllFilters) }
                 </Button>
               )
@@ -218,6 +222,7 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
                 ? ''
                 : intl.formatMessage(tableToolbarMessages.clearAllFiltersDescription)
             }
+            isSearch={ !isEmpty(filterValue) }
           />
         ) }
         activeFiltersConfig={ {

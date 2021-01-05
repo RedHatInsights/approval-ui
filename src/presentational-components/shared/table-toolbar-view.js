@@ -33,7 +33,8 @@ export const TableToolbarView = ({
   onSort,
   activeFiltersConfig,
   filterConfig,
-  rows
+  rows,
+  ouiaId
 }) => {
   const intl = useIntl();
 
@@ -77,7 +78,7 @@ export const TableToolbarView = ({
   return (
     <Section type="content" page-type={ `tab-${titlePlural}` } id={ `tab-${titlePlural}` }>
       { routes() }
-      { renderToolbar(isLoading) }
+      { (rows.length !== 0 || filterValue) && renderToolbar(isLoading) }
       { isLoading && <DataListLoader/> }
       { !isLoading && rows.length === 0 ? (
         renderEmptyState()
@@ -92,6 +93,7 @@ export const TableToolbarView = ({
             className="pf-u-pt-0 vertical-align-inherit"
             sortBy={ sortBy }
             onSort={ onSort }
+            ouiaId={ ouiaId }
           >
             <TableHeader />
             <TableBody/>
@@ -134,7 +136,8 @@ TableToolbarView.propTypes = {
   onSort: propTypes.func,
   activeFiltersConfig: propTypes.object,
   filterConfig: propTypes.array,
-  rows: propTypes.array
+  rows: propTypes.array,
+  ouiaId: propTypes.string
 };
 
 TableToolbarView.defaultProps = {
