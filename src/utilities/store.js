@@ -1,6 +1,6 @@
 
 import promiseMiddleware from 'redux-promise-middleware';
-import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/files/cjs/ReducerRegistry';
+import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/ReducerRegistry';
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 

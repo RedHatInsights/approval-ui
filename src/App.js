@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { Main } from '@redhat-cloud-services/frontend-components/components/cjs/Main';
+import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 import { Routes } from './Routes';
 import { AppPlaceholder } from './presentational-components/shared/loader-placeholders';
