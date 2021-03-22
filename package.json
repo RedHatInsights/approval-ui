@@ -104,14 +104,16 @@
     "xhr-mock": "^2.5.1"
   },
   "scripts": {
-    "analyze": "NODE_ENV=production webpack --config config/webpack.config.js --env.prod=true --env.analyze=true --mode production",
-    "build": "NODE_ENV=production webpack --config config/webpack.config.js --env.prod=true --mode production",
+    "analyze": "NODE_ENV=production webpack --config config/prod.webpack.config.js --env analyze=true",
+    "build": "webpack --config config/prod.webpack.config.js",
     "extract:messages": "npx @formatjs/cli extract 'src/**/*.{js,jsx}' --out-file ./translations/messages.json",
     "lint": "yarn eslint ./src",
     "prod": "NODE_ENV=production webpack serve --config config/dev.webpack.config.js",
     "server:ctr": "node src/server/generateServerKey.js",
-    "start": "BETA=true NODE_ENV=development webpack serve --config config/dev.webpack.config.js",
-    "start:link": "LINKED=TRUE NODE_ENV=development BETA=true webpack serve --config config/dev.webpack.config.js",
+    "start": "NODE_ENV=development webpack serve --config config/dev.webpack.config.js",
+    "start:beta": "NODE_ENV=development BETA=true webpack serve --config config/dev.webpack.config.js",
+    "build": "webpack --config config/prod.webpack.config.js",
+    "build:prod": "NODE_ENV=production webpack --config config/prod.webpack.config.js",
     "travis:build": "webpack --config config/test.webpack.config.js",
     "travis:verify": "npm-run-all travis:build lint test",
     "verify": "npm-run-all build lint test"

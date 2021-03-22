@@ -3,6 +3,7 @@ module.exports = {
     '/beta/ansible/catalog/approval': { host: `https://localhost:8002` },
     '/beta/apps/approval': { host: `https://localhost:8002` },
     '/ansible/catalog/approval': { host: `https://localhost:8002` },
-    '/apps/approval': { host: `https://localhost:8002` }
+    '/apps/approval': { host: `https://localhost:8002` },
+    '/beta/config': { host: `http://localhost:8889` }
   }
 };
