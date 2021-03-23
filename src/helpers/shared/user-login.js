@@ -48,6 +48,7 @@ export function getAxiosInstance() {
 }
 
 export function getRbacRoleApi() {
+  console.log('Debug - RBAC path, Approval path ', RBAC_API_BASE, APPROVAL_API_BASE);
   return rbacRoleApi;
 }
 
@@ -57,11 +58,12 @@ grapqlInstance.interceptors.request.use(async (config) => {
   return config;
 });
 /**
- * Graphql does not return error response when the qery fails.
+ * Graphql does not return error response when the query fails.
  * Instead it returns 200 response with error object.
  * We catch it and throw it to trigger notification middleware
  */
 grapqlInstance.interceptors.response.use(({ data }) => {
+  console.log('Debug - graphql - data ', data);
   if (data.errors) {
     throw {
       message: data.errors[0].errorType,
