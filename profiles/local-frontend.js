@@ -1,41 +1,9 @@
-// Hack so that Mac OSX docker can sub in host.docker.internal instead of localhost
-// see https://docs.docker.com/docker-for-mac/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
-const localhost =
-  process.env.PLATFORM === 'linux' ? 'localhost' : 'host.docker.internal';
+const routes = {};
+routes['/beta/ansible/catalog/approval'] = { host: `https://localhost:8002` },
+routes['/beta/apps/approval'] = { host: `https://localhost:8002` },
+routes['/ansible/catalog/approval'] = { host: `https://localhost:8002` },
+routes['/apps/approval'] = { host: `https://localhost:8002` },
+routes[`/beta/config`] = { host: `https://localhost:8889` },
 
-const SECTION = 'ansible/catalog';
-const APP_ID = 'approval';
-const FRONTEND_PORT = 8002;
-
-const routes = {
-  [`/${SECTION}/${APP_ID}`]: { host: `https://${localhost}:${FRONTEND_PORT}` },
-  [`/beta/${SECTION}/${APP_ID}`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/beta/${SECTION}/${APP_ID}/portfolios`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/${SECTION}/${APP_ID}/portfolios`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/beta/${SECTION}/${APP_ID}/portfolios`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/${SECTION}/${APP_ID}/platforms`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/beta/${SECTION}/${APP_ID}/platforms`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/${SECTION}/${APP_ID}/orders`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/beta/${SECTION}/${APP_ID}/orders`]: {
-    host: `https://${localhost}:${FRONTEND_PORT}`,
-  },
-  [`/apps/${APP_ID}`]: { host: `https://${localhost}:${FRONTEND_PORT}` },
-  [`/beta/apps/${APP_ID}`]: { host: `https://${localhost}:${FRONTEND_PORT}` },
-  [`/beta/config`]: { host: `http://localhost:8889` },
-};
-
+module.exports = { routes };
 exports.routes = routes;

@@ -6,13 +6,15 @@ import App from './App';
 import { getBaseName } from '@redhat-cloud-services/frontend-components-utilities/helpers/helpers';
 import PropTypes from 'prop-types';
 
-const AppEntry = ({ logger }) => (
-  <Provider store={ store(logger === undefined) }>
+const AppEntry = ({ logger }) => {
+  console.log('Debug AppEntry - logger', logger);
+  return (<Provider store={ store(logger) }>
     <Router basename={ getBaseName(window.location.pathname, 1) }>
-      <App />
+      <App/>
     </Router>
   </Provider>
-);
+  );
+};
 
 AppEntry.propTypes = {
   logger: PropTypes.func
