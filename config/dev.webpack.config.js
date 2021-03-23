@@ -5,7 +5,7 @@ const { config: webpackConfig, plugins } = config({
   debug: true,
   https: true,
   useFileHash: false,
-  ...(process.env.BETA && { deployment: 'beta/apps' }),
+  ...(process.env.BETA && { deployment: 'beta/apps' })
 });
 
 plugins.push(
@@ -13,12 +13,12 @@ plugins.push(
     root: resolve(__dirname, '../'),
     useFileHash: false,
     exposes: {
-      './RootApp': resolve(__dirname, '../src/AppEntry'),
-    },
+      './RootApp': resolve(__dirname, '../src/AppEntry')
+    }
   })
 );
 
 module.exports = {
   ...webpackConfig,
-  plugins,
+  plugins
 };
