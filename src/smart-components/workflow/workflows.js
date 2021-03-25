@@ -13,7 +13,6 @@ import { TopToolbar, TopToolbarTitle } from '../../presentational-components/sha
 import { AppTabs } from '../../smart-components/app-tabs/app-tabs';
 import { defaultSettings } from '../../helpers/shared/pagination';
 import asyncDebounce from '../../utilities/async-debounce';
-import { scrollToTop } from '../../helpers/shared/helpers';
 import TableEmptyState from '../../presentational-components/shared/table-empty-state';
 import routesLinks from '../../constants/routes';
 import { useIntl } from 'react-intl';
@@ -145,7 +144,6 @@ const Workflows = () => {
 
   useEffect(() => {
     updateWorkflows(defaultSettings);
-    scrollToTop();
   }, []);
 
   useEffect(() => {
