@@ -1,5 +1,5 @@
 import React from 'react';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/cjs/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 const activeStates = [ 'notified' ];
 export const APPROVAL_ADMINISTRATOR_ROLE = 'Approval Administrator';
@@ -7,12 +7,6 @@ export const APPROVAL_APPROVER_ROLE = 'Approval Approver';
 export const APPROVAL_ADMIN_PERSONA = 'approval/admin';
 export const APPROVAL_APPROVER_PERSONA = 'approval/approver';
 export const APPROVAL_REQUESTER_PERSONA = 'approval/requester';
-
-export const scrollToTop = () => document.getElementById('root').scrollTo({
-  behavior: 'smooth',
-  top: 0,
-  left: 0
-});
 
 export const isRequestStateActive = (state) => activeStates.includes(state);
 

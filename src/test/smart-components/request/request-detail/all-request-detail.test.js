@@ -15,7 +15,7 @@ import RequestTranscript from '../../../../smart-components/request/request-deta
 import { mockGraphql } from '../../../__mocks__/user-login';
 import { BreadcrumbItem } from '@patternfly/react-core';
 import routes from '../../../../constants/routes';
-import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/files/ReducerRegistry';
+import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/ReducerRegistry';
 import requestReducer, { requestsInitialState } from '../../../../redux/reducers/request-reducer';
 import UserContext from '../../../../user-context';
 import ActionModal from '../../../../smart-components/request/action-modal';
