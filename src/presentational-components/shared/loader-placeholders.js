@@ -15,8 +15,8 @@ import {
   Card,
   CardBody
 } from '@patternfly/react-core';
-import { Section } from '@redhat-cloud-services/frontend-components/components/cjs/Section';
-import { Main } from '@redhat-cloud-services/frontend-components/components/cjs/Main';
+import { Section } from '@redhat-cloud-services/frontend-components/Section';
+import { Main } from '@redhat-cloud-services/frontend-components/Main';
 
 import clsx from 'clsx';
 

@@ -15,7 +15,7 @@ import { CheckCircleIcon,
   OnRunningIcon,
   ErrorCircleOIcon,
   ExclamationCircleIcon } from '@patternfly/react-icons';
-import { EmptyTable } from '@redhat-cloud-services/frontend-components/components/cjs/EmptyTable';
+import { EmptyTable } from '@redhat-cloud-services/frontend-components/EmptyTable';
 import { useIntl } from 'react-intl';
 import commonMessages from '../../../messages/common.message';
 import requestsMessages from '../../../messages/requests.messages';
