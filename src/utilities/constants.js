@@ -7,8 +7,8 @@ import {
 import React from 'react';
 import requestsMessages from '../messages/requests.messages';
 
-export const APPROVAL_API_BASE = `${process.env.BASE_PATH}/approval/v1.2`;
-export const RBAC_API_BASE = `${process.env.BASE_PATH}/rbac/v1`;
+export const APPROVAL_API_BASE = `${process.env.BASE_PATH || '/api'}/approval/v1.2`;
+export const RBAC_API_BASE = `${process.env.BASE_PATH || '/api'}/rbac/v1`;
 
 export const decisionValues = {
   undecided: { displayName: requestsMessages.needsReview, color: 'blue', icon: <InfoCircleIcon /> },
