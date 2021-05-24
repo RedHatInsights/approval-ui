@@ -3,7 +3,6 @@ import {
   FETCH_WORKFLOWS,
   SORT_WORKFLOWS,
   SET_FILTER_WORKFLOWS,
-  CLEAR_FILTER_WORKFLOWS,
   UPDATE_WORKFLOW
 } from '../../redux/action-types';
 
@@ -65,11 +64,6 @@ const finishUpdatingWorkflow = (state) => ({
   isUpdating: state.isUpdating - 1
 });
 
-const clearFilterValue = (state) => ({
-  ...state,
-  filterValue: ''
-});
-
 export default {
   [`${FETCH_WORKFLOWS}_PENDING`]: setLoadingState,
   [`${FETCH_WORKFLOWS}_FULFILLED`]: setWorkflows,
@@ -79,6 +73,5 @@ export default {
   [`${UPDATE_WORKFLOW}_FULFILLED`]: finishUpdatingWorkflow,
   [`${UPDATE_WORKFLOW}_REJECTED`]: finishUpdatingWorkflow,
   [SORT_WORKFLOWS]: setSortWorkflows,
-  [SET_FILTER_WORKFLOWS]: setFilterValue,
-  [CLEAR_FILTER_WORKFLOWS]: clearFilterValue
+  [SET_FILTER_WORKFLOWS]: setFilterValue
 };

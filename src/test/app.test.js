@@ -7,8 +7,8 @@ import { RBAC_API_BASE } from '../utilities/constants';
 import { APPROVAL_ADMINISTRATOR_ROLE } from '../helpers/shared/helpers';
 import { AppPlaceholder } from '../presentational-components/shared/loader-placeholders';
 import { BrowserRouter } from 'react-router-dom';
-import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
-import { Main } from '@redhat-cloud-services/frontend-components/Main';
+import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/cjs/NotificationPortal';
+import { Main } from '@redhat-cloud-services/frontend-components/components/cjs/Main';
 
 jest.mock('../Routes', () => ({
   __esModule: true,
@@ -40,7 +40,7 @@ describe('<App />', () => {
 
   it('renders correctly as administrator role', async () => {
     apiClientMock.get(
-      `${RBAC_API_BASE}/roles/?limit=50&offset=0&name=Approval%20&display_name=&name_match=partial&scope=principal`,
+      `${RBAC_API_BASE}/roles/?limit=50&offset=0&name=Approval%20&name_match=partial&scope=principal`,
       mockOnce({ body: {
         data: [{
           role: APPROVAL_ADMINISTRATOR_ROLE

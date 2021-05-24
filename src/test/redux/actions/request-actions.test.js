@@ -1,8 +1,7 @@
 import configureStore from 'redux-mock-store' ;
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
-import { ADD_NOTIFICATION } from '@redhat-cloud-services/frontend-components-notifications/redux';
-import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
+import { notificationsMiddleware, ADD_NOTIFICATION } from '@redhat-cloud-services/frontend-components-notifications';
 import {
   FETCH_REQUESTS,
   FETCH_REQUEST

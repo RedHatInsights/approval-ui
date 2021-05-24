@@ -6,7 +6,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
-import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
+import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications';
 import AllRequestDetail from '../../../../smart-components/request/request-detail/my-request-detail';
 import { RequestLoader } from '../../../../presentational-components/shared/loader-placeholders';
 import { APPROVAL_API_BASE } from '../../../../utilities/constants';
@@ -15,7 +15,7 @@ import RequestTranscript from '../../../../smart-components/request/request-deta
 import { mockGraphql } from '../../../__mocks__/user-login';
 import { BreadcrumbItem } from '@patternfly/react-core';
 import routes from '../../../../constants/routes';
-import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/ReducerRegistry';
+import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/files/ReducerRegistry';
 import requestReducer, { requestsInitialState } from '../../../../redux/reducers/request-reducer';
 import UserContext from '../../../../user-context';
 import ActionModal from '../../../../smart-components/request/action-modal';

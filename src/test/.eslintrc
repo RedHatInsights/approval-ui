@@ -9,7 +9,6 @@
   },
   "rules": {
     "react/display-name": "off",
-    "react/prop-types": "off",
-    "no-import-assign": "off"
+    "react/prop-types": "off"
   }
 }

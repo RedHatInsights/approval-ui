@@ -8,7 +8,7 @@ import { IntlProvider } from 'react-intl';
 import Requests from '../../../smart-components/request/requests';
 import requestReducer, { requestsInitialState } from '../../../redux/reducers/request-reducer';
 import { act } from 'react-dom/test-utils';
-import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/ReducerRegistry';
+import ReducerRegistry, { applyReducerHash } from '@redhat-cloud-services/frontend-components-utilities/files/ReducerRegistry';
 import { APPROVAL_API_BASE } from '../../../utilities/constants';
 import TableEmptyState from '../../../presentational-components/shared/table-empty-state';
 import UserContext from '../../../user-context';

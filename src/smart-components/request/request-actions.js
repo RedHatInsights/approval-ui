@@ -19,7 +19,7 @@ const RequestActions = ({
 
   const { id, state } = request;
   const approveDenyAllowed = isRequestStateActive(state) && canApproveDeny;
-  const commentAllowed = canComment;
+  const commentAllowed = isRequestStateActive(state) && canComment;
 
   return (
     <div style={ { display: 'flex' } }>

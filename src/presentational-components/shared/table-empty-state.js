@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EmptyTable } from '@redhat-cloud-services/frontend-components/EmptyTable';
+import { EmptyTable } from '@redhat-cloud-services/frontend-components/components/cjs/EmptyTable';
 import NoRowsState from './no-rows-state';
 
 const TableEmptyState = ({

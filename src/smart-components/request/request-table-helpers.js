@@ -29,7 +29,7 @@ export const createRows = (actionResolver, data, indexpath = routes.request, int
           color={ decisionValues[request.decision]?.color }
         >
           { capitlize(intl.formatMessage(
-            decisionValues[request.decision]?.displayName || untranslatedMessage()
+              decisionValues[request.decision]?.displayName || untranslatedMessage()
           )) }
         </Label>) }
       </Fragment>

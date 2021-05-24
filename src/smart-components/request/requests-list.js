@@ -19,6 +19,7 @@ import { APPROVAL_APPROVER_PERSONA, useIsApprovalAdmin, useIsApprovalApprover } 
 import { TopToolbar, TopToolbarTitle } from '../../presentational-components/shared/top-toolbar';
 import { AppTabs } from '../../smart-components/app-tabs/app-tabs';
 import asyncDebounce from '../../utilities/async-debounce';
+import { scrollToTop } from '../../helpers/shared/helpers';
 import TableEmptyState from '../../presentational-components/shared/table-empty-state';
 import UserContext from '../../user-context';
 import { prepareChips } from './chips-helpers';
@@ -125,14 +126,13 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
   </Fragment>;
 
   const resetList = () => {
-    stateDispatch({ type: 'clearFilters' });
-    dispatch(clearFilterValueRequests());
     dispatch(resetRequestList());
   };
 
   useEffect(() => {
     resetList();
     updateRequests();
+    scrollToTop();
   }, [ persona ]);
 
   useEffect(() => {
