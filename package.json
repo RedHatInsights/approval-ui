@@ -99,8 +99,11 @@
     "start": "NODE_ENV=development webpack serve --config config/dev.webpack.config.js",
     "start:beta": "NODE_ENV=development BETA=true webpack serve --config config/dev.webpack.config.js",
     "start:proxy": "NODE_ENV=development API_ENDOINT=https://ci.cloud.redhat.com webpack serve --config config/dev.webpack.config.js",
+    "start:standalone": "NODE_ENV=development BETA=true webpack serve --config config/standalone.dev.webpack.config.js",
     "test": "jest --passWithNoTests --runInBand",
     "build:prod": "NODE_ENV=production webpack --config config/prod.webpack.config.js",
+    "build:standalone": "NODE_ENV=production webpack --config config/standalone.dev.webpack.config.js",
+    "build:standalone_dev": "NODE_ENV=dev webpack --config config/standalone.dev.webpack.config.js",
     "travis:build": "webpack --config config/test.webpack.config.js",
     "travis:verify": "npm-run-all travis:build lint test",
     "verify": "npm-run-all build lint test"
