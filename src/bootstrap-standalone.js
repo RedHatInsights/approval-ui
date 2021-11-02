@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './loaders/standalone/AppEntry';
+import App from './AppEntryStandalone';
 
 ReactDOM.render(<App />, document.getElementById('root'));
