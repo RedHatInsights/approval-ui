@@ -18,18 +18,14 @@ const pathName = window.location.pathname.split('/');
 
 pathName.shift();
 
-let release = '/';
-
-if (pathName[0] === 'beta') {
-  release = `/${pathName.shift()}/`;
-}
+const release = '/';
 
 const App = () => {
   const [ auth, setAuth ] = useState(false);
   const [ userRoles, setUserRoles ] = useState({});
 
   useEffect(() => {
-    insights.catalog.init();
+    window.catalog.init();
     Promise.all([
       insights.catalog.auth
       .getUser()
