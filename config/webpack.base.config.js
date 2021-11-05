@@ -1,6 +1,7 @@
 /* global require, module, __dirname */
 const { resolve } = require('path');
 const config = require('@redhat-cloud-services/frontend-components-config');
+const TSOverrides = require('./webpack-ts-overrides');
 const webpack = require('webpack');
 
 // Default user defined settings
@@ -67,7 +68,8 @@ module.exports = (inputConfigs) => {
 
   // Override sections of the webpack config to work with TypeScript
   const newWebpackConfig = {
-    ...webpackConfig
+    ...webpackConfig,
+    ...TSOverrides,
   };
   if (customConfigs.WEBPACK_PROXY) {
     newWebpackConfig.devServer.proxy = customConfigs.WEBPACK_PROXY;

@@ -5,6 +5,7 @@ import { AppPlaceholder } from './presentational-components/shared/loader-placeh
 // react-int eng locale data
 import { IntlProvider } from 'react-intl';
 import { BrowserRouter } from 'react-router-dom';
+import '@patternfly/patternfly/patternfly.scss'
 
 import UserContext from './user-context';
 
