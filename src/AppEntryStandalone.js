@@ -7,7 +7,8 @@ import { getBaseName } from '@redhat-cloud-services/frontend-components-utilitie
 import PropTypes from 'prop-types';
 
 const AppEntry = () => (<Provider store={ store() }>
-  <Router basename={ getBaseName(window.location.pathname, 1) }>
+  { /* eslint-disable-next-line no-undef */ }
+  <Router basename=''>
     <App/>
   </Router>
 </Provider>

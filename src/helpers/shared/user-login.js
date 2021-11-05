@@ -53,7 +53,6 @@ export function getRbacRoleApi() {
 
 const grapqlInstance = axios.create();
 grapqlInstance.interceptors.request.use(async (config) => {
-  console.log('Debug - window.catalog: ', window.catalog);
   await window.insights.chrome.auth.getUser();
   return config;
 });

@@ -5,7 +5,7 @@ import { AppPlaceholder } from './presentational-components/shared/loader-placeh
 // react-int eng locale data
 import { IntlProvider } from 'react-intl';
 import { BrowserRouter } from 'react-router-dom';
-import '@patternfly/patternfly/patternfly.scss'
+import '@patternfly/patternfly/patternfly.scss';
 
 import UserContext from './user-context';
 
@@ -16,11 +16,9 @@ const pathName = window.location.pathname.split('/');
 
 pathName.shift();
 
-const release = '/';
-
 const App = () => {
   return (
-    <BrowserRouter basename={ `${release}${pathName[0]}/${pathName[1]}/${pathName[2]}` }>
+    <BrowserRouter basename=''>
       <Suspense fallback={ <AppPlaceholder /> }>
         <IntlProvider locale="en">
           <UserContext.Provider value={ { userRoles: { 'Approval Administrator': true }} }>
