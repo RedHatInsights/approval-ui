@@ -13,7 +13,7 @@ module.exports = webpackBase({
   API_BASE_PATH: apiBasePath,
 
   // Port that the UI is served over
-  UI_PORT: 8002,
+  UI_PORT: 8003,
 
   // Determines if the app should be compiled to run on insights or on
   // another platform. Options: insights, standalone

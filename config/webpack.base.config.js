@@ -18,7 +18,7 @@ const defaultConfigs = [
   { name: 'UI_USE_HTTPS', default: false, scope: 'webpack' },
   { name: 'UI_DEBUG', default: false, scope: 'webpack' },
   { name: 'TARGET_ENVIRONMENT', default: 'prod', scope: 'webpack' },
-  { name: 'UI_PORT', default: 8002, scope: 'webpack' },
+  { name: 'UI_PORT', default: 8003, scope: 'webpack' },
   { name: 'WEBPACK_PROXY', default: undefined, scope: 'webpack' },
   { name: 'WEBPACK_PUBLIC_PATH', default: undefined, scope: 'webpack' },
   { name: 'USE_FAVICON', default: true, scope: 'webpack' }
@@ -82,12 +82,18 @@ module.exports = (inputConfigs) => {
     console.log('Overriding configs for standalone mode.');
 
     const newEntry = resolve(__dirname, '../src/entry-standalone.js');
-    const newPubPath = '/';
     console.log(`New entry.App: ${newEntry}`);
     newWebpackConfig.entry.App = newEntry;
   }
 
   plugins.push(new webpack.DefinePlugin(globals));
+  plugins.push(
+    require('@redhat-cloud-services/frontend-components-config/federated-modules')({
+      root: resolve(__dirname, '../'),
+      bundlePfModules: true,
+      useFileHash: false
+    })
+  );
 
   return {
     ...newWebpackConfig,

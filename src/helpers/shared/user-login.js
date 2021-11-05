@@ -16,7 +16,7 @@ const errorInterceptor = (error = {}) => {
 
 // check identity before each request. If the token is expired it will log out user
 axiosInstance.interceptors.request.use(async config => {
-  await window.insights.chrome.auth.getUser();
+  window.catalog?.standalone ? '' : await window.insights.chrome.auth.getUser();
   return config;
 });
 
@@ -53,6 +53,7 @@ export function getRbacRoleApi() {
 
 const grapqlInstance = axios.create();
 grapqlInstance.interceptors.request.use(async (config) => {
+  console.log('Debug - window.catalog: ', window.catalog);
   await window.insights.chrome.auth.getUser();
   return config;
 });
