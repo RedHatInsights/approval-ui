@@ -8,21 +8,21 @@ const webpack = require('webpack');
 const defaultConfigs = [
   // Global scope means that the variable will be available to the app itself
   // as a constant after it is compiled
-  { name: 'API_HOST', default: '', scope: 'global' },
-  { name: 'API_BASE_PATH', default: '', scope: 'global' },
-  { name: 'DEPLOYMENT_MODE', default: 'standalone', scope: 'global' },
-  { name: 'NAMESPACE_TERM', default: 'namespaces', scope: 'global' },
-  { name: 'APPLICATION_NAME', default: 'Catalog', scope: 'global' },
+  { name: 'ANSIBLE_CATALOG_API_HOST', default: '', scope: 'global' },
+  { name: 'ANSIBLE_CATALOG_API_BASE_PATH', default: '', scope: 'global' },
+  { name: 'ANSIBLE_CATALOG_DEPLOYMENT_MODE', default: 'standalone', scope: 'global' },
+  { name: 'ANSIBLE_CATALOG_NAMESPACE_TERM', default: 'namespaces', scope: 'global' },
+  { name: 'ANSIBLE_CATALOG_APPLICATION_NAME', default: 'Catalog', scope: 'global' },
 
   // Webpack scope means the variable will only be available to webpack at
   // build time
-  { name: 'UI_USE_HTTPS', default: false, scope: 'webpack' },
-  { name: 'UI_DEBUG', default: false, scope: 'webpack' },
-  { name: 'TARGET_ENVIRONMENT', default: 'prod', scope: 'webpack' },
-  { name: 'UI_PORT', default: 8003, scope: 'webpack' },
-  { name: 'WEBPACK_PROXY', default: undefined, scope: 'webpack' },
-  { name: 'WEBPACK_PUBLIC_PATH', default: undefined, scope: 'webpack' },
-  { name: 'USE_FAVICON', default: true, scope: 'webpack' }
+  { name: 'ANSIBLE_CATALOG_UI_USE_HTTPS', default: false, scope: 'webpack' },
+  { name: 'ANSIBLE_CATALOG_UI_DEBUG', default: false, scope: 'webpack' },
+  { name: 'ANSIBLE_CATALOG_TARGET_ENVIRONMENT', default: 'prod', scope: 'webpack' },
+  { name: 'ANSIBLE_CATALOG_UI_PORT', default: 8003, scope: 'webpack' },
+  { name: 'ANSIBLE_CATALOG_WEBPACK_PROXY', default: undefined, scope: 'webpack' },
+  { name: 'ANSIBLE_CATALOG_WEBPACK_PUBLIC_PATH', default: undefined, scope: 'webpack' },
+  { name: 'ANSIBLE_CATALOG_USE_FAVICON', default: true, scope: 'webpack' }
 ];
 
 module.exports = (inputConfigs) => {
@@ -45,42 +45,41 @@ module.exports = (inputConfigs) => {
   });
 
   const htmlPluginConfig = {
-    targetEnv: customConfigs.DEPLOYMENT_MODE,
-    applicationName: customConfigs.APPLICATION_NAME
+    targetEnv: customConfigs.ANSIBLE_CATALOG_DEPLOYMENT_MODE
   };
 
   // being able to turn off the favicon is useful for deploying to insights mode
   // console.redhat.com sets its own favicon and ours tends to override it if we
   // set one
-  if (customConfigs.USE_FAVICON) {
+  if (customConfigs.ANSIBLE_CATALOG_USE_FAVICON) {
     htmlPluginConfig.favicon = 'src/assets/images/favicon.ico';
   }
 
   const { config: webpackConfig, plugins } = config({
     rootFolder: resolve(__dirname, '../'),
     htmlPlugin: htmlPluginConfig,
-    debug: customConfigs.UI_DEBUG,
-    https: customConfigs.UI_USE_HTTPS,
+    debug: customConfigs.ANSIBLE_CATALOG_UI_DEBUG,
+    https: customConfigs.ANSIBLE_CATALOG_UI_USE_HTTPS,
 
     // defines port for dev server
-    port: customConfigs.UI_PORT
+    port: customConfigs.ANSIBLE_CATALOG_UI_PORT
   });
 
   // Override sections of the webpack config to work with TypeScript
   const newWebpackConfig = {
     ...webpackConfig,
-    ...TSOverrides,
+    ...TSOverrides
   };
-  if (customConfigs.WEBPACK_PROXY) {
-    newWebpackConfig.devServer.proxy = customConfigs.WEBPACK_PROXY;
+  if (customConfigs.ANSIBLE_CATALOG_WEBPACK_PROXY) {
+    newWebpackConfig.devServer.proxy = customConfigs.ANSIBLE_CATALOG_WEBPACK_PROXY;
   }
 
-  if (customConfigs.WEBPACK_PUBLIC_PATH) {
-    console.log(`New output.publicPath: ${customConfigs.WEBPACK_PUBLIC_PATH}`);
-    newWebpackConfig.output.publicPath = customConfigs.WEBPACK_PUBLIC_PATH;
+  if (customConfigs.ANSIBLE_CATALOG_WEBPACK_PUBLIC_PATH) {
+    console.log(`New output.publicPath: ${customConfigs.ANSIBLE_CATALOG_WEBPACK_PUBLIC_PATH}`);
+    newWebpackConfig.output.publicPath = customConfigs.ANSIBLE_CATALOG_WEBPACK_PUBLIC_PATH;
   }
 
-  if (customConfigs.DEPLOYMENT_MODE === 'standalone') {
+  if (customConfigs.ANSIBLE_CATALOG_DEPLOYMENT_MODE === 'standalone') {
     console.log('Overriding configs for standalone mode.');
 
     const newEntry = resolve(__dirname, '../src/entry-standalone.js');
