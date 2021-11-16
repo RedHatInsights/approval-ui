@@ -13,10 +13,9 @@ import {
   Stack,
   StackItem,
   Card,
-  CardBody
+  CardBody, PageSection
 } from '@patternfly/react-core';
 import { Section } from '@redhat-cloud-services/frontend-components/Section';
-import { Main } from '@redhat-cloud-services/frontend-components/Main';
 
 import clsx from 'clsx';
 
@@ -84,14 +83,14 @@ export const RequestLoader = () => (
 );
 
 export const AppPlaceholder = () => (
-  <Main className="pf-u-p-0 pf-u-ml-0">
+  <PageSection className="pf-u-p-0 pf-u-ml-0">
     <TopToolbar className="ins__approval__placeholder_toolbar">
       <TopToolbarTitle/>
     </TopToolbar>
     <Section type="content">
       <DataListLoader />
     </Section>
-  </Main>
+  </PageSection>
 );
 
 export const FormItemLoader = () => <Loader height={ 64 } width='100%' />;
