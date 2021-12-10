@@ -17,6 +17,7 @@ const pathName = window.location.pathname.split('/');
 pathName.shift();
 
 const App = () => {
+  localStorage.setItem('catalog_standalone', true);
   return (
     <BrowserRouter basename=''>
       <Suspense fallback={ <AppPlaceholder /> }>
