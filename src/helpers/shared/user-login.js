@@ -22,12 +22,20 @@ const createAxiosInstance = () => {
 
 const axiosInstance = createAxiosInstance();
 
-const resolveInterceptor = response => response.data || response;
+const resolveInterceptor = response =>
+{ console.log('Debug - response: ', response);
+  const data = response.data || response;
+  console.log('Debug - data: ', data);
+  console.log('Debug - returns: ', { ...data, data: data.data || data.results });
+  return { ...data, data: data.data || data.results };
+};
+
 const errorInterceptor = (error = {}) => {
   if (error.status === 401) {
     loginUser();
     return;
   }
+
   const requestId = error.response?.headers?.['x-rh-insights-request-id'];
   throw requestId
     ? { ...error.response, requestId }

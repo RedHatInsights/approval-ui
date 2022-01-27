@@ -38,7 +38,7 @@ export const MoveButtons = ({ id }) => {
   );
 
   const updateSequence = (sequence) => {
-    dispatch( isStandalone() ? moveSequenceS({ id, sequence }) :moveSequence({ id, sequence }));
+    dispatch(isStandalone() ? moveSequenceS({ id, sequence }) : moveSequence({ id, sequence }));
 
     return debouncedMove(cache, id)({ id, sequence }, dispatch, intl);
   };

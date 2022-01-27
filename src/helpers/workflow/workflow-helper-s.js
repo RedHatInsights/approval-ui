@@ -1,9 +1,6 @@
-import { getWorkflowApi, getTemplateApi, getAxiosInstance } from '../shared/user-login';
+import { getAxiosInstance } from '../shared/user-login';
 import { defaultSettings } from '../shared/pagination';
 import { APPROVAL_API_BASE } from '../../utilities/constants';
-
-const workflowApi = getWorkflowApi();
-const templateApi = getTemplateApi();
 
 export function fetchWorkflows(filter = '', pagination = defaultSettings) {
   const paginationQuery = `&limit=${Math.max(pagination.limit, 10)}&offset=${pagination.offset}`;
@@ -16,22 +13,32 @@ export function fetchWorkflows(filter = '', pagination = defaultSettings) {
 
 export const fetchWorkflow = (id) =>  getAxiosInstance().get(
   `${APPROVAL_API_BASE}/workflows/${id}/`
-);;
+);
 
 export function updateWorkflow(data) {
   return getAxiosInstance().patch(
-    `${APPROVAL_API_BASE}/workflows/?${data.id}`, data
+    `${APPROVAL_API_BASE}/workflows/${data.id}`, data
   );
 }
 
 export function repositionWorkflow(data) {
   return getAxiosInstance().patch(
-    `${APPROVAL_API_BASE}/workflows/?${data.id}`, data.sequence
+    `${APPROVAL_API_BASE}/workflows/${data.id}`, data.sequence
+  );
+}
+
+export const listTemplates = () =>  getAxiosInstance().get(
+  `${APPROVAL_API_BASE}/templates/`
+);
+
+export function addWorkflowToTemplate(templateId, workflow) {
+  return getAxiosInstance().post(
+    `${APPROVAL_API_BASE}/templates/${templateId}/workflows/`, workflow
   );
 }
 
 export  function addWorkflow(workflow) {
-  return templateApi.listTemplates().then(({ data }) => {
+  return listTemplates().then(({ data }) => {
     // workaround for v1. Need to pass template ID with the workflow. Assigning to first template
     if (!data[0]) {
       throw new Error('No template exists');
@@ -39,14 +46,20 @@ export  function addWorkflow(workflow) {
 
     return data[0].id;
 
-  }).then(id => workflowApi.addWorkflowToTemplate(id, workflow, {}));
+  }).then(id => addWorkflowToTemplate(id, workflow));
+}
+
+export function destroyWorkflow(workflowId) {
+  return getAxiosInstance().delete(
+    `${APPROVAL_API_BASE}/workflows/${workflowId}/`
+  );
 }
 
 export async function removeWorkflow(workflowId) {
-  return await workflowApi.destroyWorkflow(workflowId);
+  return await destroyWorkflow(workflowId);
 }
 
 export async function removeWorkflows(selectedWorkflows) {
-  return Promise.all(selectedWorkflows.map(async workflowId => await workflowApi.destroyWorkflow(workflowId)));
+  return Promise.all(selectedWorkflows.map(async workflowId => await destroyWorkflow(workflowId)));
 }
 
