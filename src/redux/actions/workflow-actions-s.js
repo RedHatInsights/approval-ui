@@ -1,5 +1,5 @@
 import * as ActionTypes from '../action-types';
-import * as WorkflowHelper from '../../helpers/workflow/workflow-helper-s';
+import * as WorkflowHelper from '../../helpers/workflow/workflow-helper';
 import worfklowMessages from '../../messages/workflows.messages';
 
 export const fetchWorkflows = (pagination) => (dispatch, getState) => {

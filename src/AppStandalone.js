@@ -19,7 +19,7 @@ pathName.shift();
 const App = () => {
   localStorage.setItem('catalog_standalone', true);
   return (
-    <BrowserRouter basename=''>
+    <BrowserRouter basename='/ui/approval'>
       <Suspense fallback={ <AppPlaceholder /> }>
         <IntlProvider locale="en">
           <UserContext.Provider value={ { userRoles: { 'Approval Administrator': true }} }>

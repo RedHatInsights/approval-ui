@@ -43,3 +43,6 @@ export const approvalRoles = (roles = []) => {
   });
   return userRoles;
 };
+
+export const isStandalone = () =>
+  !!localStorage.getItem('catalog_standalone');
