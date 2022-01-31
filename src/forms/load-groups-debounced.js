@@ -1,4 +1,5 @@
 import asyncDebounce from '../utilities/async-debounce';
-import { fetchFilterApprovalGroups } from '../helpers/group/group-helper';
+import { fetchFilterApprovalGroups, fetchFilterApprovalGroupsS } from '../helpers/group/group-helper';
+import { isStandalone } from '../helpers/shared/helpers';
 
-export default asyncDebounce(fetchFilterApprovalGroups);
+export default asyncDebounce(isStandalone() ? fetchFilterApprovalGroupsS : fetchFilterApprovalGroups);
