@@ -1,6 +1,7 @@
 /* global require, module, __dirname */
 const { resolve } = require('path');
 const config = require('@redhat-cloud-services/frontend-components-config');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const webpack = require('webpack');
 
 // Default user defined settings
@@ -85,8 +86,10 @@ module.exports = (inputConfigs) => {
     console.log('Overriding configs for standalone mode.');
 
     const newEntry = resolve(__dirname, '../src/entry-standalone.js');
+    console.log(`New entry.App: ${newEntry}`);
     newWebpackConfig.entry.App = newEntry;
   }
+
   plugins.push(new webpack.DefinePlugin(globals));
   plugins.push(
     require('@redhat-cloud-services/frontend-components-config/federated-modules')(
@@ -95,6 +98,13 @@ module.exports = (inputConfigs) => {
         useFileHash: false
       }
     )
+  );
+
+  plugins.push(
+    new ModuleFederationPlugin({
+      name: 'Approval',
+      filename: 'remoteApproval.js'
+    })
   );
 
   return {
