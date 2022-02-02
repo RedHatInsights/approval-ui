@@ -9,7 +9,7 @@ import WorkflowTableContext from './workflow-table-context';
 import worfklowMessages from '../../messages/workflows.messages';
 import { repositionWorkflow, fetchWorkflows, moveSequence } from '../../redux/actions/workflow-actions';
 import { repositionWorkflow as repositionWorkflowS, fetchWorkflows as fetchWorkflowsS, moveSequence as moveSequenceS }
-  from '../../redux/actions/workflow-actions-s';
+from '../../redux/actions/workflow-actions-s';
 import asyncDebounce from '../../utilities/async-debounce';
 import { isStandalone } from '../../helpers/shared/helpers';
 

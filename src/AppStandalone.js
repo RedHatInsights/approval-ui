@@ -19,11 +19,10 @@ import {
   NavList, Page,
   PageHeader,
   PageHeaderTools,
-  PageSection,
   PageSidebar
 } from '@patternfly/react-core';
 import { getUser, logoutUser } from './helpers/shared/active-user';
-import { AboutModalWindow } from './presentational-components/navigation/about-modal/about-modal';
+import { AboutModalWindow } from './presentational-components/navigation/about-modal';
 import { ExternalLinkAltIcon, QuestionCircleIcon } from '@patternfly/react-icons';
 import { SmallLogo } from './presentational-components/navigation/small-logo';
 import { StatefulDropdown } from './presentational-components/navigation/stateful-dropdown';
@@ -41,7 +40,7 @@ export const Paths = {
   portfolios: '/portfolios',
   portfolio: '/portfolios/portfolio',
   orders: '/orders',
-  order: 'orders/order',
+  order: '/orders/order',
   approval: '/approval'
 };
 
@@ -60,23 +59,25 @@ const App = () => {
       type: 'item',
       name
     });
-    const baseUrl = 'https://catalog.k8s.local/ui/';
-    console.log('Debug approval - location: ', location);
+    const index = window.location.href.indexOf(window.location.pathname);
+    const baseUrl = window.location.href.substr(0, index);
+    console.log('Debug - calculated baseUrl', baseUrl);
+
     return [
       menuItem('Products', {
-        url: `${baseUrl}catalog${Paths.products}`
+        url: `${baseUrl}/ui/catalog${Paths.products}`
       }),
       menuItem('Portfolios', {
-        url: `${baseUrl}catalog${Paths.portfolios}`
+        url: `${baseUrl}/ui/catalog${Paths.portfolios}`
       }),
       menuItem('Platforms', {
-        url: `${baseUrl}catalog${Paths.platforms}`
+        url: `${baseUrl}/ui/catalog${Paths.platforms}`
       }),
       menuItem('Orders', {
-        url: `${baseUrl}catalog${Paths.orders}`
+        url: `${baseUrl}/ui/catalog${Paths.orders}`
       }),
       menuItem('Approval', {
-        url: `${baseUrl}${Paths.approval}`
+        url: `${baseUrl}/ui/catalog${Paths.approval}/index.html`
       }),
       menuItem(`Documentation`, {
         url:
@@ -177,7 +178,7 @@ const App = () => {
 
   const headerNav = () => (
     <PageHeader
-      logo={ <SmallLogo alt={ 'Ansible automation catalog' } /> }
+      logo={ <SmallLogo alt={ 'Ansible Automation Catalog' } /> }
       headerTools={
         <PageHeaderTools>
           <div>

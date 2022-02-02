@@ -13,32 +13,32 @@ export const AboutModalWindow = (props) => {
   const browser = detect();
   return (
     <AboutModal
-      isOpen={isOpen}
+      isOpen={ isOpen }
       trademark=""
-      brandImageSrc={Logo}
-      onClose={onClose}
-      brandImageAlt={brandImageAlt}
-      productName={productName}
+      brandImageSrc={ Logo }
+      onClose={ onClose }
+      brandImageAlt={ brandImageAlt }
+      productName={ productName }
     >
       <TextContent>
         <TextList>
           <TextListItem>
-            {`Username`}
+            { `Username` }
           </TextListItem>
           <TextListItem>
-            {userName}
+            { userName }
           </TextListItem>
           <TextListItem>
-            {`Browser Version`}
+            { `Browser Version` }
           </TextListItem>
           <TextListItem>
-            {browser?.name + ' ' + browser?.version}
+            { browser?.name + ' ' + browser?.version }
           </TextListItem>
           <TextListItem>
-            {`Browser OS`}
+            { `Browser OS` }
           </TextListItem>
           <TextListItem>
-            {browser?.os}
+            { browser?.os }
           </TextListItem>
         </TextList>
       </TextContent>
