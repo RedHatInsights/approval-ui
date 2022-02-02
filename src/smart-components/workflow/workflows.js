@@ -127,7 +127,7 @@ const Workflows = () => {
     , shallowEqual
   );
   const data = workflows?.data || workflows?.results;
-  const meta = { count: workflows.count };
+  const meta = workflows?.meta || { count: workflows.count };
 
   const [{ filterValue, isFetching, isFiltering, selectedWorkflows, selectedAll, rows }, stateDispatch ] = useReducer(
     workflowsListState,
@@ -153,7 +153,7 @@ const Workflows = () => {
 
   useEffect(() => {
     stateDispatch({ type: 'setRows', payload: createRows(data) });
-  }, [ workflows ]);
+  }, [ data ]);
 
   const clearFilters = () => {
     stateDispatch({ type: 'clearFilters' });

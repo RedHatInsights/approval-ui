@@ -23,10 +23,7 @@ const createAxiosInstance = () => {
 const axiosInstance = createAxiosInstance();
 
 const resolveInterceptor = response =>
-{ console.log('Debug - response: ', response);
-  const data = response.data || response;
-  console.log('Debug - data: ', data);
-  console.log('Debug - returns: ', { ...data, data: data.data || data.results });
+{ const data = response.data || response;
   return { ...data, data: data.data || data.results };
 };
 
