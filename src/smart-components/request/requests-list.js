@@ -184,7 +184,7 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
 
   return (
     <Fragment>
-      <TopToolbar>
+      <TopToolbar className="top-toolbar">
         <TopToolbarTitle title={ intl.formatMessage(commonMessages.approvalTitle) }/>
         { isApprovalAdmin && <AppTabs/> }
       </TopToolbar>

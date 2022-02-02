@@ -31,7 +31,7 @@ const CommonApiError = () => {
   const history = useHistory();
   return (
     <Fragment>
-      <TopToolbar className="pf-u-pb-md">
+      <TopToolbar className="top-toolbar">
         <TopToolbarTitle title={ intl.formatMessage(commonMessages.approvalTitle) }/>
       </TopToolbar>
       <div className="pf-u-mb-xl">

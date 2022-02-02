@@ -6,6 +6,7 @@ import {
 } from '@patternfly/react-icons';
 import React from 'react';
 import requestsMessages from '../messages/requests.messages';
+export const MIN_SCREEN_HEIGHT = 'calc(100vh - 76px)';
 
 // eslint-disable-next-line no-undef
 export const APPROVAL_API_BASE = DEPLOYMENT_MODE === 'standalone'

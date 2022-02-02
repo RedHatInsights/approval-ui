@@ -31,6 +31,7 @@ import { Logo } from './presentational-components/navigation/logo';
 
 const pathName = window.location.pathname.split('/');
 import { useLocation } from 'react-router';
+import { MIN_SCREEN_HEIGHT } from './utilities/constants';
 pathName.shift();
 
 export const Paths = {
@@ -60,7 +61,7 @@ const App = () => {
       name
     });
     const baseUrl = 'https://catalog.k8s.local/ui/';
-
+    console.log('Debug approval - location: ', location);
     return [
       menuItem('Products', {
         url: `${baseUrl}catalog${Paths.products}`
@@ -283,15 +284,15 @@ const App = () => {
   return (
     <Suspense fallback={ <AppPlaceholder /> }>
       <div id="app-render-root" className="pf-c-drawer__content">
-        <Page isManagedSidebar={ true } header={ headerNav() } sidebar={ sidebarNav() }>
+        <Page classname=".pf-c-page__main" isManagedSidebar={ true } header={ headerNav() } sidebar={ sidebarNav() }>
           { aboutModalVisible && aboutModal() }
           <IntlProvider locale="en">
             <UserContext.Provider value={ { userRoles: { 'Approval Administrator': true }} }>
               <React.Fragment>
                 <NotificationsPortal />
-                <PageSection className="pf-u-p-0 pf-u-ml-0">
+                <div style={ { minHeight: MIN_SCREEN_HEIGHT } }>
                   <Routes/>
-                </PageSection>
+                </div>
               </React.Fragment>
             </UserContext.Provider>
           </IntlProvider>
