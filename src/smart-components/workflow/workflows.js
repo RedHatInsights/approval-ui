@@ -5,6 +5,7 @@ import { ToolbarGroup, ToolbarItem, Button, Checkbox } from '@patternfly/react-c
 import { PlusCircleIcon, SearchIcon } from '@patternfly/react-icons';
 import { truncate, cellWidth } from '@patternfly/react-table';
 import { clearFilterValueWorkflows, fetchWorkflows, setFilterValueWorkflows } from '../../redux/actions/workflow-actions';
+import { fetchWorkflows as fetchWorkflowsS } from '../../redux/actions/workflow-actions-s';
 import AddWorkflow from './add-workflow-modal';
 import RemoveWorkflow from './remove-workflow-modal';
 import { createRows } from './workflow-table-helpers';
@@ -23,6 +24,7 @@ import tableToolbarMessages from '../../messages/table-toolbar.messages';
 import EditWorkflow from './edit-workflow-modal';
 import WorkflowTableContext from './workflow-table-context';
 import isEmpty from 'lodash/isEmpty';
+import { isStandalone } from '../../helpers/shared/helpers';
 
 const columns = (intl, selectedAll, selectAll) => [
   { title: '', transforms: [ cellWidth(1) ]},
@@ -38,7 +40,7 @@ const debouncedFilter = asyncDebounce(
   (filter, dispatch, filteringCallback, meta = defaultSettings) => {
     filteringCallback(true);
     dispatch(setFilterValueWorkflows(filter, meta));
-    return dispatch(fetchWorkflows(meta))
+    return dispatch(isStandalone() ? fetchWorkflowsS(meta) : fetchWorkflows(meta))
     .then(() =>
       filteringCallback(false)
     );
@@ -120,10 +122,13 @@ export const workflowsListState = (state, action) => {
 
 const Workflows = () => {
   const moveFunctionsCache = useRef({});
-  const { workflows: { data, meta }, filterValueRedux } = useSelector(
+  const { workflows, filterValueRedux } = useSelector(
     ({ workflowReducer: { workflows, filterValue: filterValueRedux }}) => ({ workflows, filterValueRedux })
     , shallowEqual
   );
+  const data = workflows?.data || workflows?.results;
+  const meta = { count: workflows.count };
+
   const [{ filterValue, isFetching, isFiltering, selectedWorkflows, selectedAll, rows }, stateDispatch ] = useReducer(
     workflowsListState,
     initialState(filterValueRedux)
@@ -137,7 +142,7 @@ const Workflows = () => {
 
   const updateWorkflows = (pagination) => {
     stateDispatch({ type: 'setFetching', payload: true });
-    return dispatch(fetchWorkflows(pagination))
+    return dispatch(isStandalone() ? fetchWorkflowsS(pagination) : fetchWorkflows(pagination))
     .then(() => stateDispatch({ type: 'setFetching', payload: false }))
     .catch(() => stateDispatch({ type: 'setFetching', payload: false }));
   };
@@ -148,7 +153,7 @@ const Workflows = () => {
 
   useEffect(() => {
     stateDispatch({ type: 'setRows', payload: createRows(data) });
-  }, [ data ]);
+  }, [ workflows ]);
 
   const clearFilters = () => {
     stateDispatch({ type: 'clearFilters' });

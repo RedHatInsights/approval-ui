@@ -41,7 +41,7 @@ export const Paths = {
   portfolios: '/portfolios',
   portfolio: '/portfolios/portfolio',
   orders: '/orders',
-  order: 'ordders/order',
+  order: 'orders/order',
   approval: '/approval'
 };
 
