@@ -98,7 +98,7 @@ const RequestDetail = ({ requestBreadcrumbs, indexpath }) => {
             postMethod={ () => updateRequest(selectedRequest.id) }
             closeUrl={ { pathname: indexpath.index, search: `?request=${selectedRequest.id}` } } /> } />
       </Switch>
-      <TopToolbar
+      <TopToolbar className="top-toolbar"
         breadcrumbs={ requestBreadcrumbs }
         paddingBottom={ true }
       >

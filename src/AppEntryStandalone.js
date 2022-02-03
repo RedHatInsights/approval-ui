@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const AppEntry = () => (<Provider store={ store() }>
   { /* eslint-disable-next-line no-undef */ }
-  <Router basename=''>
+  <Router basename='/ui/catalog/approval'>
     <App/>
   </Router>
 </Provider>

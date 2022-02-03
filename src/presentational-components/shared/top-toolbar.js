@@ -9,8 +9,13 @@ import './top-toolbar.scss';
 
 export const TopToolbar = ({ children,  breadcrumbs, paddingBottom, className }) => (
   <div
+    style={ {
+      backgroundColor: 'var(--pf-global--palette--white)',
+      marginLeft: '24',
+      margingTop: '24'
+    } }
     className={ clsx(
-      'pf-u-pt-lg pf-u-pr-lg pf-u-pl-lg',
+      'pf-u-pt-lg pf-u-pr-lg pf-u-pl-lg pf-u-ml-l pf-u-mt-lg',
       paddingBottom && 'pf-u-pb-sm',
       'top-toolbar',
       className
