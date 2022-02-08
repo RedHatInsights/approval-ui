@@ -14,8 +14,10 @@ import { fetchRequests,
   clearFilterValueRequests,
   resetRequestList } from '../../redux/actions/request-actions';
 import { createRows } from './request-table-helpers';
+import { fetchRequests as fetchRequestsS } from '../../redux/actions/request-actions-s';
+
 import { TableToolbarView } from '../../presentational-components/shared/table-toolbar-view';
-import { APPROVAL_APPROVER_PERSONA, useIsApprovalAdmin, useIsApprovalApprover } from '../../helpers/shared/helpers';
+import { APPROVAL_APPROVER_PERSONA, isStandalone, useIsApprovalAdmin, useIsApprovalApprover } from '../../helpers/shared/helpers';
 import { TopToolbar, TopToolbarTitle } from '../../presentational-components/shared/top-toolbar';
 import { AppTabs } from '../../smart-components/app-tabs/app-tabs';
 import asyncDebounce from '../../utilities/async-debounce';
@@ -44,7 +46,7 @@ const debouncedFilter = asyncDebounce(
   (dispatch, filteringCallback, persona, updateFilter) => {
     filteringCallback(true);
     updateFilter && updateFilter();
-    return dispatch(fetchRequests(persona)).then(() =>
+    return dispatch(isStandalone() ? fetchRequestsS(persona) : fetchRequests(persona)).then(() =>
       filteringCallback(false)
     );
   },
