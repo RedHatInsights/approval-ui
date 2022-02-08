@@ -5,7 +5,7 @@ import {
   TextList,
   TextListItem
 } from '@patternfly/react-core';
-import Logo from '../../../assets/images/logo-large.svg';
+import Logo from '../../assets/images/logo-large.svg';
 import { detect } from 'detect-browser';
 
 export const AboutModalWindow = (props) => {
