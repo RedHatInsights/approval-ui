@@ -148,7 +148,7 @@ const App = () => {
         brandImageSrc={ Logo }
         onClose={ () => setAboutModalVisible(false) }
         brandImageAlt={ `Ansible Logo` }
-        productName={ 'Ansible Automation Catalog' }
+        productName={ 'Automation Services Catalog' }
         user={ user }
         userName={ userName }
       />
