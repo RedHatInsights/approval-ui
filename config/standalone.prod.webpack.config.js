@@ -9,5 +9,5 @@ module.exports = webpackBase({
   UI_USE_HTTPS: false,
   UI_DEBUG: false,
   TARGET_ENVIRONMENT: 'prod',
-  WEBPACK_PUBLIC_PATH: '/ui/catalog/'
+  WEBPACK_PUBLIC_PATH: '/ui/catalog/approval/'
 });
