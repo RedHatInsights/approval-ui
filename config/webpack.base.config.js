@@ -10,11 +10,11 @@ const defaultConfigs = [
   // as a constant after it is compiled
   { name: 'API_HOST', default: '', scope: 'global' },
   { name: 'API_BASE_PATH', default: '', scope: 'global' },
+  { name: 'AUTH_BASE_PATH', default: '', scope: 'global' },
   { name: 'UI_BASE_PATH', default: '', scope: 'global' },
   { name: 'DEPLOYMENT_MODE', default: 'standalone', scope: 'global' },
   { name: 'NAMESPACE_TERM', default: 'namespaces', scope: 'global' },
   { name: 'APPLICATION_NAME', default: 'Catalog', scope: 'global' },
-  { name: 'AUTOMATION_SERVICES_CATALOG_LOGIN_URI', default: 'Catalog', scope: 'global' },
 
   // Webpack scope means the variable will only be available to webpack at
   // build time
