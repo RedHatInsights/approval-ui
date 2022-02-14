@@ -20,6 +20,7 @@ const RequestList = ({ isLoading, items, noItems, indexpath }) => {
   };
 
   const isExpanded = key => expanded.includes(key);
+  console.log('Debug - RequestList - items: ', items);
 
   return (
     <Fragment>

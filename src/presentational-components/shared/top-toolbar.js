@@ -1,32 +1,23 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Level, LevelItem, Text, TextContent, TextVariants  } from '@patternfly/react-core';
+import { Level, LevelItem, PageSection, Text, TextContent, TextVariants } from '@patternfly/react-core';
 import { ToolbarTitlePlaceholder } from './loader-placeholders';
 import ApprovalBreadcrumbs from './breadcrumbs';
-import clsx from 'clsx';
 
 import './top-toolbar.scss';
 
-export const TopToolbar = ({ children,  breadcrumbs, paddingBottom, className }) => (
-  <div
+export const TopToolbar = ({ children,  breadcrumbs }) => (
+  <PageSection
     style={ {
-      backgroundColor: 'var(--pf-global--palette--white)',
-      marginLeft: '24',
-      margingTop: '24'
+      backgroundColor: 'var(--pf-global--palette--white)'
     } }
-    className={ clsx(
-      'pf-u-pt-lg pf-u-pr-lg pf-u-pl-lg pf-u-ml-l pf-u-mt-lg',
-      paddingBottom && 'pf-u-pb-sm',
-      'top-toolbar',
-      className
-    ) }
   >
     { breadcrumbs && (<Level className="pf-u-mb-md">
       <ApprovalBreadcrumbs breadcrumbs={ breadcrumbs } />
     </Level>)
     }
     { children }
-  </div>
+  </PageSection>
 );
 
 TopToolbar.propTypes = {

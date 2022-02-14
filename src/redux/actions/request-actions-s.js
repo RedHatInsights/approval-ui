@@ -1,5 +1,5 @@
 import * as ActionTypes from '../action-types';
-import * as RequestHelper from '../../helpers/request/request-helper';
+import * as RequestHelper from '../../helpers/request/request-helper-s';
 import { defaultSettings } from '../../helpers/shared/pagination';
 import actionModalMessages from '../../messages/action-modal.messages';
 

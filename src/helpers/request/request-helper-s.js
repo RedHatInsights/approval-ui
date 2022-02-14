@@ -39,11 +39,13 @@ export function fetchRequests(filter = {}, pagination = defaultSettings, persona
 }
 
 export const fetchRequestTranscript = (requestId) => {
+  console.log('Debug - fetchRequestTranscript for requestId: ', requestId);
   return getAxiosInstance().get(`${APPROVAL_API_BASE}/requests/${requestId}/?extra=true`);
 };
 
 export const fetchRequestContent = (id) => {
-  const fetchUrl = `${APPROVAL_API_BASE}/requests/${id}/content`;
+  //TODO - fetch the request only until the content endpoint is implemented
+  const fetchUrl = `${APPROVAL_API_BASE}/requests/${id}/?extra=true`;
   const fetchHeaders = { 'x-rh-persona': APPROVAL_REQUESTER_PERSONA };
   return getAxiosInstance()({ method: 'get', url: fetchUrl, headers: fetchHeaders });
 };
@@ -56,33 +58,8 @@ export const fetchRequestCapabilities = (id, isParent) => {
 
 export async function fetchRequestWithSubrequests(id, persona) {
   const requestData = await fetchRequestTranscript(id, persona);
-
-  console.log('Debug - requestData: ', requestData);
-  console.log('Debug - persona: ', requestData);
-  if (!requestData || requestData.length === 0) { return {}; }
-
-  if (persona === APPROVAL_APPROVER_PERSONA) {
-    if (requestData && requestData.length > 0 && requestData[0].number_of_children > 0) {
-      const result = await fetchRequestCapabilities(id, true);
-
-      if (result && result.data) {
-        requestData[0].requests = requestData[0].requests.map(request => {
-          return {
-            ...result.data.find((item) => (item.id === request.id) && item.metadata),
-            ...request
-          };
-        });
-      }
-    }
-    else {
-      const request = await fetchRequestCapabilities(id, false);
-      if (request) {
-        requestData[0] = { ...requestData[0], metadata: request.metadata };
-      }
-    }
-  }
-
-  return requestData[0];
+  console.log('Debu - fetchRequestWithSubrequests - requestData: ', requestData);
+  return requestData;
 }
 
 export const createRequestAction = (requestId, actionIn) => getAxiosInstance().post(`${APPROVAL_API_BASE}/requests/${requestId}/actions/`, actionIn);

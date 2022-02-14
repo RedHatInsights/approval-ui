@@ -7,7 +7,7 @@ import ActionModal from '../action-modal';
 import RequestInfoBar from './request-info-bar';
 import RequestTranscript from './request-transcript';
 import { fetchRequest, fetchRequestContent } from '../../../redux/actions/request-actions';
-import { fetchRequest as fetchRequestS, fetchRequestContent as fetchRequestContentS } from '../../../redux/actions/request-actions';
+import { fetchRequest as fetchRequestS, fetchRequestContent as fetchRequestContentS } from '../../../redux/actions/request-actions-s';
 import { RequestLoader } from '../../../presentational-components/shared/loader-placeholders';
 import { TopToolbar, TopToolbarTitle } from '../../../presentational-components/shared/top-toolbar';
 import UserContext from '../../../user-context';

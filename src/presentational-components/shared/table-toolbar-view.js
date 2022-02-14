@@ -5,10 +5,10 @@ import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { defaultSettings, getCurrentPage, getNewPage  } from '../../helpers/shared/pagination';
 import { DataListLoader } from './loader-placeholders';
 import { useIntl } from 'react-intl';
-import { Section } from '@redhat-cloud-services/frontend-components/Section';
 import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/PrimaryToolbar';
 
 import tableToolbarMessages from '../../messages/table-toolbar.messages';
+import { PageSection } from '@patternfly/react-core';
 
 /**
  * Need to optimize this component
@@ -75,7 +75,7 @@ export const TableToolbarView = ({
     />
   );
   return (
-    <Section type="content" page-type={ `tab-${titlePlural}` } id={ `tab-${titlePlural}` }>
+    <PageSection page-type={ `tab-${titlePlural}` } id={ `tab-${titlePlural}` }>
       { routes() }
       { (rows.length !== 0 || activeFiltersConfig?.filters?.length > 0) && renderToolbar(isLoading) }
       { isLoading && <DataListLoader/> }
@@ -111,7 +111,7 @@ export const TableToolbarView = ({
           ) }
         </Fragment>
       }
-    </Section>);
+    </PageSection>);
 };
 
 TableToolbarView.propTypes = {
