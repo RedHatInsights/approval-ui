@@ -36,7 +36,6 @@ export const requestsInitialState = {
 const setLoadingState = state => ({ ...state, isRequestDataLoading: true, expandedRequests: []});
 const setRequests = (state, { payload }) => ({ ...state, requests: payload, isRequestDataLoading: false });
 const selectRequest = (state, { payload }) => {
-  console.log('Debug - selectRequest - state, payload', state, payload);
   return ({ ...state, selectedRequest: payload, isRequestDataLoading: false });};
 const setRequestContent = (state, { payload }) => ({ ...state, requestContent: payload, isRequestDataLoading: false });
 const setSortRequests = (state, { payload }) => ({

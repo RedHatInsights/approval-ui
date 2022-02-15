@@ -38,10 +38,7 @@ export function fetchRequests(filter = {}, pagination = defaultSettings, persona
   return getAxiosInstance()({ method: 'get', url: fetchUrl, headers: fetchHeaders });
 }
 
-export const fetchRequestTranscript = (requestId) => {
-  console.log('Debug - fetchRequestTranscript for requestId: ', requestId);
-  return getAxiosInstance().get(`${APPROVAL_API_BASE}/requests/${requestId}/?extra=true`);
-};
+export const fetchRequestTranscript = (requestId) => getAxiosInstance().get(`${APPROVAL_API_BASE}/requests/${requestId}/?extra=true`);
 
 export const fetchRequestContent = (id) => {
   //TODO - fetch the request only until the content endpoint is implemented
@@ -58,7 +55,6 @@ export const fetchRequestCapabilities = (id, isParent) => {
 
 export async function fetchRequestWithSubrequests(id, persona) {
   const requestData = await fetchRequestTranscript(id, persona);
-  console.log('Debu - fetchRequestWithSubrequests - requestData: ', requestData);
   return requestData;
 }
 

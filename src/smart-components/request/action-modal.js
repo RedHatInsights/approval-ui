@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Modal, Stack, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 import { createRequestAction } from '../../redux/actions/request-actions';
+import { createRequestAction as createRequestActionS } from '../../redux/actions/request-actions-s';
 import { createRequestCommentSchema } from '../../forms/request-comment-form.schema';
 import useQuery from '../../utilities/use-query';
 import routes from '../../constants/routes';
@@ -13,6 +14,7 @@ import { useIntl } from 'react-intl';
 import actionModalMessages from '../../messages/action-modal.messages';
 import requestsMessages from '../../messages/requests.messages';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons';
+import { isStandalone } from '../../helpers/shared/helpers';
 
 const actionTypeToDescription = (type) => {
   switch (type) {
@@ -47,9 +49,13 @@ const actionTypeToSubmitLabel = (type) => {
   }
 };
 
+const createRequestActionMethod = (actionName, requestId, actionIn, intl) => {
+  return isStandalone() ? createRequestActionS(actionName, requestId, actionIn, intl) : createRequestAction(actionName, requestId, actionIn, intl);
+};
+
 const ActionModal = ({
   actionType,
-  createRequestAction,
+  createRequestActionMethod,
   closeUrl,
   postMethod
 }) => {
@@ -63,13 +69,13 @@ const ActionModal = ({
       : intl.formatMessage(actionModalMessages.actionName, { actionType: intl.formatMessage(actionTypeToTitle(actionType)) }) ;
 
     return postMethod ?
-      createRequestAction(
+      createRequestActionMethod(
         actionName,
         id,
         { operation: operationType[actionType], ...data },
         intl
       ).then(() => postMethod()).then(() => push(closeUrl))
-      : createRequestAction(
+      : createRequestActionMethod(
         actionName,
         id,
         { operation: operationType[actionType], ...data },
@@ -115,14 +121,14 @@ ActionModal.defaultProps = {
 };
 
 ActionModal.propTypes = {
-  createRequestAction: PropTypes.func.isRequired,
+  createRequestActionMethod: PropTypes.func.isRequired,
   postMethod: PropTypes.func,
   actionType: PropTypes.string,
   closeUrl: PropTypes.oneOfType([ PropTypes.string, PropTypes.shape({ patname: PropTypes.string, search: PropTypes.string }) ])
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createRequestAction
+  createRequestActionMethod
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(ActionModal);

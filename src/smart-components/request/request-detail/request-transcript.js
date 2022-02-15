@@ -17,7 +17,6 @@ const requestItems = (request) => {
 
 const RequestTranscript = ({ request, indexpath }) => {
   const intl = useIntl();
-  console.log('Debug - request transcript: request, indexpath: ', request, indexpath);
   return (
     <Card>
       <CardBody>

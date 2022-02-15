@@ -35,8 +35,6 @@ export const Request = ({ item, isExpanded, toggleExpand, indexpath }) => {
     return item.metadata && item.metadata.user_capabilities && item.metadata.user_capabilities[capability];
   };
 
-  console.log('Debug - AtcionList - item : ', item);
-  console.log('Debug - actions : ', (isStandalone() && item.parent) ? item.extra_data?.actions : item.actions);
   return (
     <DataListItem key={ `request-${item.id}` }
       aria-labelledby={ `check-request-${item.id}` }
