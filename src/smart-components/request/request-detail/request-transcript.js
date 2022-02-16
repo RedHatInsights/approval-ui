@@ -1,4 +1,4 @@
-import React, { Fragment }  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody, Title } from '@patternfly/react-core';
 import RequestList from './request-list';
@@ -8,7 +8,7 @@ import { isStandalone } from '../../../helpers/shared/helpers';
 
 const requestItems = (request) => {
   if (isStandalone()) {
-    return request?.extra_data?.subrequests && request.extra_data.subrequests.length > 0 ? request.extra_data.subrequests : [request];
+    return request?.extra_data?.subrequests && request.extra_data.subrequests.length > 0 ? request.extra_data.subrequests : [ request ];
   }
   else {
     return request.requests && request.requests.length > 0 ? request.requests : [ request ];
