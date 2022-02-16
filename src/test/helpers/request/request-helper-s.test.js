@@ -1,5 +1,4 @@
 import { fetchRequestWithSubrequests } from '../../../helpers/request/request-helper-s';
-import { mockGraphql } from '../../__mocks__/user-login';
 import { APPROVAL_API_BASE } from '../../../utilities/constants';
 import { APPROVAL_REQUESTER_PERSONA, APPROVAL_APPROVER_PERSONA } from '../../../helpers/shared/helpers';
 

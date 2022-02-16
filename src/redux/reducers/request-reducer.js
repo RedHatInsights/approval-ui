@@ -37,6 +37,7 @@ const setLoadingState = state => ({ ...state, isRequestDataLoading: true, expand
 const setRequests = (state, { payload }) => ({ ...state, requests: payload, isRequestDataLoading: false });
 const selectRequest = (state, { payload }) => {
   return ({ ...state, selectedRequest: payload, isRequestDataLoading: false });};
+
 const setRequestContent = (state, { payload }) => ({ ...state, requestContent: payload, isRequestDataLoading: false });
 const setSortRequests = (state, { payload }) => ({
   ...state,
