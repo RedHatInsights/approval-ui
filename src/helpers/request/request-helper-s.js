@@ -41,8 +41,7 @@ export function fetchRequests(filter = {}, pagination = defaultSettings, persona
 export const fetchRequestTranscript = (requestId) => getAxiosInstance().get(`${APPROVAL_API_BASE}/requests/${requestId}/?extra=true`);
 
 export const fetchRequestContent = (id) => {
-  //TODO - fetch the request only until the content endpoint is implemented
-  const fetchUrl = `${APPROVAL_API_BASE}/requests/${id}/?extra=true`;
+  const fetchUrl = `${APPROVAL_API_BASE}/requests/${id}/content`;
   const fetchHeaders = { 'x-rh-persona': APPROVAL_REQUESTER_PERSONA };
   return getAxiosInstance()({ method: 'get', url: fetchUrl, headers: fetchHeaders });
 };
