@@ -30,7 +30,7 @@ const RequestInfoBar = ({ request, requestContent }) => {
               </StackItem>
               <StackItem key={ 'request-product' }>
                 <TextContent>
-                  <Text component={ TextVariants.small }>
+                  <Text component={ TextVariants.h6 }>
                     { intl.formatMessage(commonMessages.product) }
                   </Text>
                   <Text id='portfolio-item-name' component={ TextVariants.p }>
@@ -40,7 +40,7 @@ const RequestInfoBar = ({ request, requestContent }) => {
               </StackItem>
               <StackItem key={ 'request-portfolio' }>
                 <TextContent>
-                  <Text component={ TextVariants.small }>
+                  <Text component={ TextVariants.h6 }>
                     { intl.formatMessage(commonMessages.portfolio) }
                   </Text>
                   <Text id='portfolio-name' component={ TextVariants.p }>
@@ -50,7 +50,7 @@ const RequestInfoBar = ({ request, requestContent }) => {
               </StackItem>
               <StackItem key={ 'request-platform' }>
                 <TextContent>
-                  <Text component={ TextVariants.small }>
+                  <Text component={ TextVariants.h6 }>
                     { intl.formatMessage(commonMessages.platform) }
                   </Text>
                   <Text id='source-name' component={ TextVariants.p }>
@@ -60,7 +60,7 @@ const RequestInfoBar = ({ request, requestContent }) => {
               </StackItem>
               <StackItem key={ 'request-requester' }>
                 <TextContent>
-                  <Text component={ TextVariants.small }>{ intl.formatMessage(requestsMessages.requesterColumn) }</Text>
+                  <Text component={ TextVariants.h6 }>{ intl.formatMessage(requestsMessages.requesterColumn) }</Text>
                   <Text id='requester_name' component={ TextVariants.p }>
                     { request.requester_name }
                   </Text>
@@ -68,7 +68,7 @@ const RequestInfoBar = ({ request, requestContent }) => {
               </StackItem>
               <StackItem key={ 'request-order' }>
                 <TextContent>
-                  <Text component={ TextVariants.small }>{ intl.formatMessage(requestsMessages.orderNumber) }</Text>
+                  <Text component={ TextVariants.h6 }>{ intl.formatMessage(requestsMessages.orderNumber) }</Text>
                   <Text id='order_id' component={ TextVariants.p }>
                     { requestContent ? requestContent.order_id : '' }
                   </Text>
@@ -89,7 +89,7 @@ const RequestInfoBar = ({ request, requestContent }) => {
                 return ((requestContent.params[param]) &&
                       <StackItem key={ `request-${requestContent.params[param]}` }>
                         <TextContent>
-                          <Text key={ param } component={ TextVariants.small }>
+                          <Text key={ param } component={ TextVariants.h6 }>
                             { `${param}` }
                           </Text>
                           <Text id={ param } component={ TextVariants.p }>
