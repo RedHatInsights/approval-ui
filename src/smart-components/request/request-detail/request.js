@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useIsApprovalAdmin } from '../../../helpers/shared/helpers';
+import { isStandalone, useIsApprovalAdmin } from '../../../helpers/shared/helpers';
 import { ActionTranscript } from './action-transcript';
 
 import {
@@ -74,7 +74,7 @@ export const Request = ({ item, isExpanded, toggleExpand, indexpath }) => {
         <Stack hasGutter>
           <StackItem>
             <TextContent component={ TextVariants.h6 }>
-              <ActionTranscript actionList={ item.actions }/>
+              <ActionTranscript actionList={ (isStandalone() && item.number_of_children === 0) ? item.extra_data?.actions : item.actions }/>
             </TextContent>
           </StackItem>
         </Stack>

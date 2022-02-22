@@ -7,11 +7,12 @@ import ActionModal from '../action-modal';
 import RequestInfoBar from './request-info-bar';
 import RequestTranscript from './request-transcript';
 import { fetchRequest, fetchRequestContent } from '../../../redux/actions/request-actions';
+import { fetchRequest as fetchRequestS, fetchRequestContent as fetchRequestContentS } from '../../../redux/actions/request-actions-s';
 import { RequestLoader } from '../../../presentational-components/shared/loader-placeholders';
 import { TopToolbar, TopToolbarTitle } from '../../../presentational-components/shared/top-toolbar';
 import UserContext from '../../../user-context';
 import useQuery from '../../../utilities/use-query';
-import { approvalPersona } from '../../../helpers/shared/helpers';
+import { approvalPersona, isStandalone } from '../../../helpers/shared/helpers';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import requestsMessages from '../../../messages/requests.messages';
@@ -47,14 +48,16 @@ const RequestDetail = ({ requestBreadcrumbs, indexpath }) => {
   const { userRoles: userRoles } = useContext(UserContext);
   const intl = useIntl();
 
+  const fetchRequestData = (id, persona) => isStandalone() ? fetchRequestS(id) : fetchRequest(id, persona);
+  const fetchRequestContentData = (id, persona) => isStandalone() ? fetchRequestContentS(id) : fetchRequestContent(id, persona);
   useEffect(() => {
-    Promise.all([ dispatch(fetchRequest(id, approvalPersona(userRoles))), dispatch(fetchRequestContent(id, approvalPersona(userRoles))) ])
+    Promise.all([ dispatch(fetchRequestData(id, approvalPersona(userRoles))), dispatch(fetchRequestContentData(id, approvalPersona(userRoles))) ])
     .then(() => stateDispatch({ type: 'setFetching', payload: false }));
   }, []);
 
   const updateRequest = (id) => {
     stateDispatch({ type: 'setFetching', payload: true });
-    return dispatch(fetchRequest(id, approvalPersona(userRoles))), dispatch(fetchRequestContent(id, approvalPersona(userRoles)))
+    return dispatch(fetchRequestData(id, approvalPersona(userRoles))), dispatch(fetchRequestContentData(id, approvalPersona(userRoles)))
     .then(() => stateDispatch({ type: 'setFetching', payload: false }))
     .catch(() => stateDispatch({ type: 'setFetching', payload: false }));
   };

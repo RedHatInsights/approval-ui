@@ -37,7 +37,6 @@ const operationDisplayName = (operation) => operationInfo[operation] ? operation
 
 export const ActionTranscript = ({ actionList }) => {
   const intl = useIntl();
-
   return actionList ? (
     <Stack>
       { actionList.map(actionItem =>
