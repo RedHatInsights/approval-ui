@@ -1,10 +1,10 @@
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 import React, { lazy, useContext, useState, useEffect } from 'react';
-import ProtectedRoute from './routing/protected-route';
 import paths from './constants/routes';
 import UserContext from './user-context';
 import { useIsApprovalAdmin, useIsApprovalApprover } from './helpers/shared/helpers';
 import RequestsRoute from './routing/requests-route';
+import CatalogRoute from './routing/protected-route-s';
 
 const Requests = lazy(() => import(/* webpackChunkName: "requests" */ './smart-components/request/requests'));
 const MyRequestDetail = lazy(() => import(/* webpackChunkName: "request-detail" */ './smart-components/request/request-detail/my-request-detail'));
@@ -40,14 +40,14 @@ export const Routes = () => {
   }, [ userRoles ]);
 
   return <Switch>
-    <ProtectedRoute path={ paths.workflows.index } component={ Workflows }/>
+    <CatalogRoute path={ paths.workflows.index } component={ Workflows }/>
     <RequestsRoute path={ paths.requests.index } component={ Requests }/>
-    <Route path={ paths.allrequests.index } component={ AllRequests }/>
-    <Route path={ paths.request.index } component={ MyRequestDetail }/>
-    <Route path={ paths.allrequest.index } component={ AllRequestDetail }/>
+    <CatalogRoute path={ paths.allrequests.index } component={ AllRequests }/>
+    <CatalogRoute path={ paths.request.index } component={ MyRequestDetail }/>
+    <CatalogRoute path={ paths.allrequest.index } component={ AllRequestDetail }/>
     <Route path={ errorPaths } component={ CommonApiError }/>
-    <Route>
+    <CatalogRoute>
       <Redirect to={ defaultRequestPath }/>
-    </Route>
+    </CatalogRoute>
   </Switch>;
 };
