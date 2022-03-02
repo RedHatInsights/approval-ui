@@ -11,6 +11,8 @@ export const fetchFilterApprovalGroups = (filterValue) => {
 
 export const fetchFilterApprovalGroupsS = (filterValue) => {
   const filterQuery = `&name=${filterValue}`;
-  return getAxiosInstance().get(`${APPROVAL_API_BASE}/groups/?${filterValue && filterValue.length > 0 ? filterQuery : ''}`)
-  .then(({ data }) => (data && data.length > 0 ? data.map(({ id, name }) => ({ label: name, value: id })) : undefined));
+  return getAxiosInstance().get(`${APPROVAL_API_BASE}/groups/?role=approval-approver&role=approval-admin
+  ${filterValue && filterValue.length > 0
+    ? filterQuery : ''}`)
+  .then(({ data }) => (data && data.length > 0 ? data.map(({ uuid, name }) => ({ label: name, value: uuid })) : undefined));
 };
