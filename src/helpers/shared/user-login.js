@@ -24,7 +24,10 @@ const axiosInstance = createAxiosInstance();
 
 const resolveInterceptor = response =>
 { const data = response.data || response;
-  return { ...data, data: data.data || data.results };
+  console.log('debug interceptor response: ', response);
+  const meta = response.meta || { count: response.count };
+  console.log('debug interceptor meta: ', meta);
+  return { ...data, data: data.data || data.results, meta };
 };
 
 const errorInterceptor = (error = {}) => {

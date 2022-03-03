@@ -122,13 +122,10 @@ export const workflowsListState = (state, action) => {
 
 const Workflows = () => {
   const moveFunctionsCache = useRef({});
-  const { workflows, filterValueRedux } = useSelector(
+  const { workflows: { data, meta }, filterValueRedux } = useSelector(
     ({ workflowReducer: { workflows, filterValue: filterValueRedux }}) => ({ workflows, filterValueRedux })
     , shallowEqual
   );
-  const data = workflows?.data || workflows?.results;
-  const meta = workflows?.meta || { count: workflows.count };
-
   const [{ filterValue, isFetching, isFiltering, selectedWorkflows, selectedAll, rows }, stateDispatch ] = useReducer(
     workflowsListState,
     initialState(filterValueRedux)
