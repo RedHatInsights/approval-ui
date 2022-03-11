@@ -36,3 +36,7 @@ export const APP_DISPLAY_NAME = {
   catalog: 'Automation Services Catalog',
   topology: 'Topological inventory'
 };
+
+export const CATALOG_ADMIN_ROLE = 'catalog-admin';
+export const APPROVAL_ADMIN_ROLE = 'approval-admin';
+export const APPROVAL_APPROVER_ROLE = 'approval-approver';

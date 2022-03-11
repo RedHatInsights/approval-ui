@@ -27,10 +27,11 @@ import { ExternalLinkAltIcon, QuestionCircleIcon } from '@patternfly/react-icons
 import { SmallLogo } from './presentational-components/navigation/small-logo';
 import { StatefulDropdown } from './presentational-components/navigation/stateful-dropdown';
 import { Logo } from './presentational-components/navigation/logo';
+import { UnknownErrorPlaceholder } from './presentational-components/shared/loader-placeholders';
 
 const pathName = window.location.pathname.split('/');
 import { useLocation } from 'react-router';
-import { MIN_SCREEN_HEIGHT } from './utilities/constants';
+import { APPROVAL_ADMIN_ROLE, APPROVAL_APPROVER_ROLE, CATALOG_ADMIN_ROLE, MIN_SCREEN_HEIGHT } from './utilities/constants';
 pathName.shift();
 
 export const Paths = {
@@ -46,6 +47,7 @@ export const Paths = {
 
 const App = () => {
   localStorage.setItem('catalog_standalone', true);
+  const [ auth, setAuth ] = useState(undefined);
   const [ user, setUser ] = useState(null);
   const [ aboutModalVisible, setAboutModalVisible ] = useState(false);
   const [ menuExpandedSections, setMenuExpandedSections ] = useState([]);
@@ -53,16 +55,17 @@ const App = () => {
   const location = useLocation();
 
   const menu = () => {
-    const menuItem = (name, options = {}) => ({
-      condition: () => true,
-      ...options,
-      type: 'item',
-      name
-    });
+    const menuItem = (name, options = {}) => {
+      return !options.condition || options.condition({ user })
+        ? { ...options, type: 'item', name }
+        : null;
+    };
+
     const index = window.location.href.indexOf(window.location.pathname);
     const baseUrl = window.location.href.substr(0, index);
-
-    return [
+    console.log('Debug - baseUrl: ', baseUrl);
+    const menu = [];
+    [
       menuItem('Products', {
         url: `${baseUrl}/ui/catalog${Paths.products}`
       }),
@@ -70,20 +73,33 @@ const App = () => {
         url: `${baseUrl}/ui/catalog${Paths.portfolios}`
       }),
       menuItem('Platforms', {
-        url: `${baseUrl}/ui/catalog${Paths.platforms}`
+        url: `${baseUrl}/ui/catalog${Paths.platforms}`,
+        condition: ({ user }) =>
+          user?.roles ? user.roles.includes(CATALOG_ADMIN_ROLE) : false
       }),
       menuItem('Orders', {
         url: `${baseUrl}/ui/catalog${Paths.orders}`
       }),
       menuItem('Approval', {
-        url: `${baseUrl}/ui/catalog${Paths.approval}/index.html`
+        url: `${baseUrl}/ui/catalog${Paths.approval}/index.html`,
+        condition: ({ user }) => {
+          return user?.roles
+            ? user.roles.includes(APPROVAL_ADMIN_ROLE) ||
+                user.roles.includes(APPROVAL_APPROVER_ROLE)
+            : false;
+        }
       }),
       menuItem(`Documentation`, {
         url:
           'https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/',
         external: true
       })
-    ];
+    ].forEach((item) => {
+      if (item !== null) {
+        menu.push(item);
+      }
+    });
+    return menu;
   };
 
   const activateMenu = (items) => {
@@ -108,12 +124,17 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    getUser().then((user) => setUser(user));
+    getUser()
+    .then((user) => {
+      setAuth(true);
+      setUser(user);
+    })
+    .catch((error) => setAuth(false));
   }, []);
 
   let docsDropdownItems = [];
   let userDropdownItems = [];
-  let userName = null;
+  let userName = '';
 
   if (user) {
     if (user.first_name || user.last_name) {
@@ -124,7 +145,7 @@ const App = () => {
 
     userDropdownItems = [
       <DropdownItem isDisabled key="username">
-        Username: { user.username }
+        Username: { user.username || '' }
       </DropdownItem>,
       <DropdownItem
         key="logout"
@@ -147,7 +168,7 @@ const App = () => {
         trademark=""
         brandImageSrc={ Logo }
         onClose={ () => setAboutModalVisible(false) }
-        brandImageAlt={ `Ansible Logo` }
+        brandImageAlt={ `Application Logo` }
         productName={ 'Automation Services Catalog' }
         user={ user }
         userName={ userName }
@@ -177,7 +198,7 @@ const App = () => {
 
   const headerNav = () => (
     <PageHeader
-      logo={ <SmallLogo alt={ 'Ansible Automation Catalog' } /> }
+      logo={ <SmallLogo alt={ 'Automation Services Catalog' } /> }
       headerTools={
         <PageHeaderTools>
           <div>
@@ -269,10 +290,7 @@ const App = () => {
         nav={
           <Nav theme="dark" onToggle={ onToggle }>
             <NavList>
-              <NavGroup
-                className={ 'nav-title' }
-                title={ 'Ansible Automation Catalog' }
-              />
+              <NavGroup title={ 'Automation Services Catalog' } />
               <Menu items={ menu() } />
             </NavList>
           </Nav>
@@ -291,7 +309,8 @@ const App = () => {
               <React.Fragment>
                 <NotificationsPortal />
                 <div style={ { minHeight: MIN_SCREEN_HEIGHT } }>
-                  <Routes/>
+                  { auth === false && <UnknownErrorPlaceholder /> }
+                  { auth && <Routes /> }
                 </div>
               </React.Fragment>
             </UserContext.Provider>
