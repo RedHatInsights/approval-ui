@@ -1,9 +1,13 @@
 import React from 'react';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+import { APPROVAL_ADMIN_ROLE, APPROVAL_APPR_ROLE } from '../../utilities/constants';
+
+export const isStandalone = () =>
+  !!localStorage.getItem('catalog_standalone');
 
 const activeStates = [ 'notified' ];
-export const APPROVAL_ADMINISTRATOR_ROLE = 'Approval Administrator';
-export const APPROVAL_APPROVER_ROLE = 'Approval Approver';
+export const APPROVAL_ADMINISTRATOR_ROLE = isStandalone() ? 'approval-admin' : 'Approval Administrator';
+export const APPROVAL_APPROVER_ROLE = isStandalone() ? 'approval-approver' : 'Approval Approver';
 export const APPROVAL_ADMIN_PERSONA = 'approval/admin';
 export const APPROVAL_APPROVER_PERSONA = 'approval/approver';
 export const APPROVAL_REQUESTER_PERSONA = 'approval/requester';
@@ -16,8 +20,14 @@ export const timeAgo = (date) => (
   </span>
 );
 
-export const useIsApprovalAdmin = (roles = {}) => roles[APPROVAL_ADMINISTRATOR_ROLE];
-export const useIsApprovalApprover = (roles = {}) => roles[APPROVAL_APPROVER_ROLE];
+const useIsApprovalAdminI = (roles = {}) => roles[APPROVAL_ADMINISTRATOR_ROLE];
+const useIsApprovalApproverI = (roles = {}) => roles[APPROVAL_APPROVER_ROLE];
+
+export const useIsApprovalAdminS = (roles = []) => roles ? roles.includes(APPROVAL_ADMIN_ROLE) : false;
+export const useIsApprovalApproverS = (roles = []) => roles ? roles.includes(APPROVAL_APPR_ROLE) : false;
+
+export const useIsApprovalAdmin = (roles) => isStandalone() ? useIsApprovalAdminS(roles) : useIsApprovalAdminI(roles);
+export const useIsApprovalApprover = (roles) => isStandalone() ? useIsApprovalApproverS(roles) : useIsApprovalApproverI(roles);
 
 export const approvalPersona = (userRoles) => {
   const isApprovalAdmin = useIsApprovalAdmin(userRoles);
@@ -43,6 +53,3 @@ export const approvalRoles = (roles = []) => {
   });
   return userRoles;
 };
-
-export const isStandalone = () =>
-  !!localStorage.getItem('catalog_standalone');

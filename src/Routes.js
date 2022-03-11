@@ -24,6 +24,7 @@ export const Routes = () => {
 
   const [ defaultRequestPath, setDefaultRequestPath ] = useState(paths.requests.index);
 
+  console.log('Debug - userRoles: ', userRoles);
   useEffect(() => {
     if (isApprovalApprover || isApprovalAdmin) {
       setDefaultRequestPath(paths.requests.index);
