@@ -129,7 +129,7 @@ const App = () => {
       setAuth(true);
       setUser(user);
     })
-    .catch((error) => setAuth(false));
+    .catch(() => setAuth(false));
   }, []);
 
   let docsDropdownItems = [];
