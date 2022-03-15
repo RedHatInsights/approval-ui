@@ -14,6 +14,12 @@ describe('request-helper', () => {
       localStorage.setItem('user', 'testUser');
     });
 
+    afterEach(() => {
+      global.localStorage.setItem('catalog_standalone', false);
+      global.localStorage.removeItem('user');
+      jest.clearAllMocks();
+    });
+
     it('no data', async () => {
       apiClientMock.get(`${APPROVAL_API_BASE}/requests/some-id/?extra=true`, mockOnce({
         body: {

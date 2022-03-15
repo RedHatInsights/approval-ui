@@ -52,7 +52,7 @@ export class StatefulDropdown extends React.Component {
           <DropdownToggle onToggle={ (e) => this.onToggle(e) }>
             { this.state.selected
               ? this.state.selected
-              : defaultText || 'Dropdown' }
+              : defaultText || '' }
           </DropdownToggle>
         );
       case 'icon':
@@ -63,7 +63,7 @@ export class StatefulDropdown extends React.Component {
           >
             { this.state.selected
               ? this.state.selected
-              : defaultText || 'Dropdown' }
+              : defaultText || '' }
           </DropdownToggle>
         );
       case 'kebab':
