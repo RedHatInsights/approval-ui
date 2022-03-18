@@ -42,7 +42,7 @@ describe('<RequestsRoute />', () => {
 
   it('is an approver admin', () => {
     const wrapper = mount(
-      <ComponentWrapper value={ { userRoles: [`${APPROVAL_ADMIN_ROLE}` ]} }>
+      <ComponentWrapper value={ { userRoles: [ `${APPROVAL_ADMIN_ROLE}` ]} }>
         <RequestsRoute />
       </ComponentWrapper>
     );
