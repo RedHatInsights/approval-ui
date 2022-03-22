@@ -33,7 +33,7 @@ export function fetchRequests(filter = {}, pagination = defaultSettings, persona
   const personaQuery = persona ? `&persona=${persona}` : '';
   const paginationQuery = `&limit=${Math.max(pagination.limit, 10)}&offset=${pagination.offset}`;
   const sortQuery = `&sort_by=${sortPropertiesMapper(sortBy.property)}:${sortBy.direction}`;
-  const fetchUrl = `${APPROVAL_API_BASE}/requests/?${personaQuery}${filterQuery(filter)}${paginationQuery}${sortQuery}`;
+  const fetchUrl = `${APPROVAL_API_BASE}/requests/?${personaQuery}&${filterQuery(filter)}${paginationQuery}${sortQuery}`;
   return getAxiosInstance()({ method: 'get', url: fetchUrl });
 }
 
