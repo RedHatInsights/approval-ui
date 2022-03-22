@@ -261,8 +261,9 @@ describe('<Requests />', () => {
     wrapper.update();
 
     apiClientMock.get(
-      `${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name&filter%5Brequester_name%5D%5Bcontains_i%5D=some-requester`
-       + '&filter%5Bdecision%5D%5Beq%5D%5B%5D=approved'
+      `${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name`
+      + `&filter%5Brequester_name%5D%5Bcontains_i%5D=some-requester`
+      + '&filter%5Bdecision%5D%5Beq%5D%5B%5D=approved'
       + '&limit=50&offset=0&sort_by=created_at%3Adesc',
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
