@@ -56,7 +56,6 @@ const App = () => {
   useEffect(() => {
     getUser()
     .then((user) => {
-      console.log('Debug - set auth and user: ', auth, user);
       setUser(user);
       setAuth(true);
     })
@@ -299,11 +298,9 @@ const App = () => {
   );
 
   if (!auth) {
-    console.log('Debug - auth: ', auth);
     return <AppPlaceholder/>;
   }
 
-  console.log('Debug - authorized - auth, user, user?.roles : ', auth, user, user?.roles);
   return (
     <Suspense fallback={ <AppPlaceholder /> }>
       <div id="app-render-root" className="pf-c-drawer__content">

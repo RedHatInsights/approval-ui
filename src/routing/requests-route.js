@@ -9,10 +9,6 @@ const RequestsRoute = (props) => {
   const isApprovalAdmin = useIsApprovalAdmin(userRoles);
   const isApprovalApprover = useIsApprovalApprover(userRoles);
 
-  console.log('Debug - RequestRoute - userRoles: ', userRoles);
-  console.log('Debug - RequestRoute - isApprovalAdmin: ', isApprovalAdmin);
-  console.log('Debug - RequestRoute - isApprovalApprover: ', isApprovalApprover);
-
   if (isApprovalApprover || isApprovalAdmin) {
     return <Route { ...props } />;
   } else {
