@@ -19,8 +19,6 @@ const AddWorkflow = () => {
   const intl = useIntl();
 
   const onSave = ({ group_refs = [], ...values }) => {
-    push(routes.workflows.index);
-
     return dispatch(isStandalone() ? addWorkflowS({
       ...values,
       group_refs: group_refs.length > 0 ? group_refs.map(group => ({ name: group.label, uuid: group.value })) : []
