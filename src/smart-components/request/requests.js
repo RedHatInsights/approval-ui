@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {
   APPROVAL_APPROVER_PERSONA, useIsApprovalAdmin,
   useIsApprovalApprover,
-  isRequestStateActive
+  isRequestStateActive, APPROVER_PERSONA, isStandalone
 } from '../../helpers/shared/helpers';
 import UserContext from '../../user-context';
 import routesLinks from '../../constants/routes';
@@ -35,7 +35,7 @@ const Requests = () => {
   return !isApprovalApprover ?
     <EmptyRequestList/>
     : <RequestsList
-      persona={ APPROVAL_APPROVER_PERSONA }
+      persona={ isStandalone() ? APPROVER_PERSONA : APPROVAL_APPROVER_PERSONA }
       actionResolver={ actionResolver }
     />;
 };

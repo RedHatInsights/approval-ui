@@ -1,6 +1,6 @@
 import { fetchRequestWithSubrequests } from '../../../helpers/request/request-helper-s';
 import { APPROVAL_API_BASE } from '../../../utilities/constants';
-import { APPROVAL_REQUESTER_PERSONA, APPROVAL_APPROVER_PERSONA } from '../../../helpers/shared/helpers';
+import { APPROVAL_APPROVER_PERSONA, REQUESTER_PERSONA } from '../../../helpers/shared/helpers';
 
 describe('request-helper', () => {
   describe('#fetchRequestWithSubrequests', () => {
@@ -9,7 +9,7 @@ describe('request-helper', () => {
 
     beforeEach(() => {
       id = 'some-id';
-      persona = APPROVAL_REQUESTER_PERSONA;
+      persona = REQUESTER_PERSONA;
       localStorage.setItem('catalog_standalone', true);
       localStorage.setItem('user', 'testUser');
     });

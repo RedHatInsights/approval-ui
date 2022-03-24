@@ -42,11 +42,12 @@ const columns = (intl) => [{
 { title: intl.formatMessage(requestsMessages.statusColumn), transforms: [ sortable, cellWidth(25) ]}
 ];
 
+const fetchRequestsData = (persona, pagination) => isStandalone() ? fetchRequestsS (persona, pagination) : fetchRequests(persona, pagination);
 const debouncedFilter = asyncDebounce(
   (dispatch, filteringCallback, persona, updateFilter) => {
     filteringCallback(true);
     updateFilter && updateFilter();
-    return dispatch(isStandalone() ? fetchRequestsS(persona) : fetchRequests(persona)).then(() =>
+    return dispatch(fetchRequestsData(persona)).then(() =>
       filteringCallback(false)
     );
   },
@@ -97,7 +98,6 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
   const intl = useIntl();
   const isApprovalAdmin = useIsApprovalAdmin(userRoles);
   const isApprovalApprover = useIsApprovalApprover(userRoles);
-
   const noRequestsMessage = () => (indexpath === routesLinks.allrequest) ?
     intl.formatMessage(requestsMessages.emptyAllRequestsDescription) : intl.formatMessage(requestsMessages.emptyRequestsDescription);
 
@@ -108,7 +108,7 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
     }
 
     stateDispatch({ type: 'setFetching', payload: true });
-    return dispatch(fetchRequests(persona, pagination))
+    return dispatch(fetchRequestsData(persona, pagination))
     .then(() => stateDispatch({ type: 'setFetching', payload: false }))
     .catch(() => stateDispatch({ type: 'setFetching', payload: false }));
   };

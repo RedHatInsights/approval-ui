@@ -31,7 +31,7 @@ import { UnknownErrorPlaceholder } from './presentational-components/shared/load
 
 const pathName = window.location.pathname.split('/');
 import { useLocation } from 'react-router';
-import { APPROVAL_ADMIN_ROLE, APPROVAL_APPROVER_ROLE, CATALOG_ADMIN_ROLE, MIN_SCREEN_HEIGHT } from './utilities/constants';
+import { APPROVAL_ADMIN_ROLE, APPROVAL_APPR_ROLE, CATALOG_ADMIN_ROLE, MIN_SCREEN_HEIGHT } from './utilities/constants';
 pathName.shift();
 
 export const Paths = {
@@ -51,8 +51,16 @@ const App = () => {
   const [ user, setUser ] = useState(null);
   const [ aboutModalVisible, setAboutModalVisible ] = useState(false);
   const [ menuExpandedSections, setMenuExpandedSections ] = useState([]);
-
   const location = useLocation();
+
+  useEffect(() => {
+    getUser()
+    .then((user) => {
+      setUser(user);
+      setAuth(true);
+    })
+    .catch(() => setAuth(false));
+  }, []);
 
   const menu = () => {
     const menuItem = (name, options = {}) => {
@@ -84,7 +92,7 @@ const App = () => {
         condition: ({ user }) => {
           return user?.roles
             ? user.roles.includes(APPROVAL_ADMIN_ROLE) ||
-                user.roles.includes(APPROVAL_APPROVER_ROLE)
+                user.roles.includes(APPROVAL_APPR_ROLE)
             : false;
         }
       }),
@@ -120,15 +128,6 @@ const App = () => {
       ?.filter((i) => i.type === 'section' && i.active)
       .map((i) => i.name)
     );
-  }, []);
-
-  useEffect(() => {
-    getUser()
-    .then((user) => {
-      setAuth(true);
-      setUser(user);
-    })
-    .catch(() => setAuth(false));
   }, []);
 
   let docsDropdownItems = [];
@@ -298,13 +297,17 @@ const App = () => {
     </Fragment>
   );
 
+  if (!auth) {
+    return <AppPlaceholder/>;
+  }
+
   return (
     <Suspense fallback={ <AppPlaceholder /> }>
       <div id="app-render-root" className="pf-c-drawer__content">
         <Page classname=".pf-c-page__main" isManagedSidebar={ true } header={ headerNav() } sidebar={ sidebarNav() }>
           { aboutModalVisible && aboutModal() }
           <IntlProvider locale="en">
-            <UserContext.Provider value={ { userRoles: { 'Approval Administrator': true }} }>
+            <UserContext.Provider value={ { userRoles: user?.roles } }>
               <React.Fragment>
                 <NotificationsPortal />
                 <div style={ { minHeight: MIN_SCREEN_HEIGHT } }>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { APPROVAL_ADMIN_PERSONA } from '../../helpers/shared/helpers';
+import { ADMIN_PERSONA, APPROVAL_ADMIN_PERSONA, isStandalone } from '../../helpers/shared/helpers';
 import RequestsList from './requests-list';
 import routes from '../../constants/routes';
 
 const AllRequests = () => (
   <RequestsList
-    persona={ APPROVAL_ADMIN_PERSONA }
+    persona={ isStandalone() ? ADMIN_PERSONA : APPROVAL_ADMIN_PERSONA }
     indexpath={ routes.allrequest }
   />
 );

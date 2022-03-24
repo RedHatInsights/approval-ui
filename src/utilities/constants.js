@@ -39,4 +39,4 @@ export const APP_DISPLAY_NAME = {
 
 export const CATALOG_ADMIN_ROLE = 'catalog-admin';
 export const APPROVAL_ADMIN_ROLE = 'approval-admin';
-export const APPROVAL_APPROVER_ROLE = 'approval-approver';
+export const APPROVAL_APPR_ROLE = 'approval-approver';
