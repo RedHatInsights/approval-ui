@@ -49,7 +49,7 @@ describe('<AddWorkflow />', () => {
   });
 
   it('should submit the form', async () => {
-    expect.assertions(3);
+    expect.assertions(4);
 
     apiClientMock.get(`${APPROVAL_API_BASE}/groups/?role=approval-approver&role=approval-admin`,
       mockOnce({ body: { results: [{ uuid: 'id', name: 'name' }]}}));
@@ -108,7 +108,7 @@ describe('<AddWorkflow />', () => {
       name: 'some-name',
       description: 'some-description'
     });
-
+    expect(initialProps.postMethod).toHaveBeenCalled();
     expect(wrapper.find(MemoryRouter).instance().history.location.pathname).toEqual(routes.workflows.index);
   });
 
@@ -144,7 +144,6 @@ describe('<AddWorkflow />', () => {
       wrapper.find(Button).first().simulate('click');
     });
     wrapper.update();
-
     expect(wrapper.find(MemoryRouter).instance().history.location.pathname).toEqual(routes.workflows.index);
   });
 });
