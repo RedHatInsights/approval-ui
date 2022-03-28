@@ -167,7 +167,7 @@ const App = () => {
         brandImageSrc={ Logo }
         onClose={ () => setAboutModalVisible(false) }
         brandImageAlt={ `Application Logo` }
-        productName={ 'Automation Services Catalog' }
+        productName={ 'Pinakes' }
         user={ user }
         userName={ userName }
       />
@@ -196,7 +196,7 @@ const App = () => {
 
   const headerNav = () => (
     <PageHeader
-      logo={ <SmallLogo alt={ 'Automation Services Catalog' } /> }
+      logo={ <SmallLogo alt={ 'Pinakes' } /> }
       headerTools={
         <PageHeaderTools>
           <div>
@@ -288,7 +288,7 @@ const App = () => {
         nav={
           <Nav theme="dark" onToggle={ onToggle }>
             <NavList>
-              <NavGroup title={ 'Automation Services Catalog' } />
+              <NavGroup title={ 'Pinakes' } />
               <Menu items={ menu() } />
             </NavList>
           </Nav>
