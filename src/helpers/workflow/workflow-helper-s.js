@@ -3,7 +3,7 @@ import { defaultSettings } from '../shared/pagination';
 import { APPROVAL_API_BASE } from '../../utilities/constants';
 
 export function fetchWorkflows(filter = '', pagination = defaultSettings) {
-  const paginationQuery = `&limit=${Math.max(pagination.limit, 10)}&offset=${pagination.offset}`;
+  const paginationQuery = `&page_size=${Math.max(pagination.limit, 10)}&page=${pagination.offset || 1}`;
   const filterQuery = `&name=${filter}`;
 
   return getAxiosInstance().get(

@@ -28,7 +28,7 @@ const useIsApprovalAdminI = (roles = {}) => roles[APPROVAL_ADMINISTRATOR_ROLE];
 const useIsApprovalApproverI = (roles = {}) => roles[APPROVAL_APPROVER_ROLE];
 
 export const useIsApprovalAdminS = (roles = []) => roles ? roles.includes(APPROVAL_ADMIN_ROLE) : false;
-export const useIsApprovalApproverS = (roles = []) => roles ? roles.includes(APPROVAL_APPR_ROLE) : false;
+export const useIsApprovalApproverS = (roles = []) => roles ? roles.includes(APPROVAL_APPR_ROLE) || roles.includes(APPROVAL_ADMIN_ROLE) : false;
 
 export const useIsApprovalAdmin = (roles) => isStandalone() ? useIsApprovalAdminS(roles) : useIsApprovalAdminI(roles);
 export const useIsApprovalApprover = (roles) => isStandalone() ? useIsApprovalApproverS(roles) : useIsApprovalApproverI(roles);

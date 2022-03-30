@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import propTypes from 'prop-types';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { defaultSettings, getCurrentPage, getNewPage  } from '../../helpers/shared/pagination';
+import { defaultSettings  } from '../../helpers/shared/pagination';
 import { DataListLoader } from './loader-placeholders';
 import { useIntl } from 'react-intl';
 import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/PrimaryToolbar';
@@ -25,6 +25,8 @@ export const TableToolbarView = ({
   titlePlural,
   titleSingular,
   pagination,
+  setLimit,
+  setOffset,
   filterValue,
   onFilterChange,
   isLoading,
@@ -40,10 +42,10 @@ export const TableToolbarView = ({
 
   const paginationConfig = {
     itemCount: pagination.count,
-    page: getCurrentPage(pagination.limit, pagination.offset),
+    page: pagination.offset || 1,
     perPage: pagination.limit,
-    onSetPage: (_e, page) => fetchData({ ...pagination, offset: getNewPage(page, pagination.limit) }),
-    onPerPageSelect: (_e, size) => fetchData({ ...pagination, limit: size }),
+    onSetPage: (_e, page) => { setOffset(page || 1); return fetchData({ ...pagination, offset: page }); },
+    onPerPageSelect: (_e, size) => { setLimit(size); return fetchData({ ...pagination, limit: size });},
     isDisabled: isLoading
   };
 
@@ -123,6 +125,8 @@ TableToolbarView.propTypes = {
     offset: propTypes.number,
     count: propTypes.number
   }),
+  setLimit: propTypes.func,
+  setOffset: propTypes.func,
   titlePlural: propTypes.string,
   titleSingular: propTypes.string,
   routes: propTypes.func,

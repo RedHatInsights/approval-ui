@@ -32,6 +32,8 @@ const Requests = () => {
       />
   );
 
+  console.log('Debug - userRoles, isApprovalAdmin, isApprovalApprover, persona: ', userRoles, isApprovalAdmin, isApprovalApprover,
+    (isStandalone() ? APPROVER_PERSONA : APPROVAL_APPROVER_PERSONA));
   return !isApprovalApprover ?
     <EmptyRequestList/>
     : <RequestsList
