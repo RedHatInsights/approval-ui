@@ -62,7 +62,7 @@ describe('<Requests />', () => {
   it('should sort requests when click on sort', async () => {
     expect.assertions(3);
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=created_at%3Adesc`, mockOnce({
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=created_at%3Adesc`, mockOnce({
       status: 200,
       body: {
         meta: { count: 1, limit: 50, offset: 0 },
@@ -80,10 +80,10 @@ describe('<Requests />', () => {
     });
     wrapper.update();
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=name%3Aasc`,
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=name%3Aasc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
-          limit: '50', offset: '0', persona: 'approver', sort_by: 'name:asc'
+          page_size: '50', page: '1', persona: 'approver', sort_by: 'name:asc'
         });
         return res.status(200).body({
           meta: { count: 1, limit: 50, offset: 0 },
@@ -98,10 +98,10 @@ describe('<Requests />', () => {
     wrapper.update();
 
     apiClientMock.get(
-      `${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=name%3Adesc`,
+      `${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=name%3Adesc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
-          limit: '50', offset: '0', persona: 'approver', sort_by: 'name:desc'
+          page_size: '50', page: '1', persona: 'approver', sort_by: 'name:desc'
         });
         return res.status(200).body({
           meta: { count: 1, limit: 50, offset: 0 },
@@ -116,10 +116,10 @@ describe('<Requests />', () => {
     wrapper.update();
 
     apiClientMock.get(
-      `${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=requester_name%3Aasc`,
+      `${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=requester_name%3Aasc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
-          limit: '50', offset: '0', persona: 'approver', sort_by: 'requester_name:asc'
+          page_size: '50', page: '1', persona: 'approver', sort_by: 'requester_name:asc'
         });
         return res.status(200).body({
           meta: { count: 1, limit: 50, offset: 0 },
@@ -138,7 +138,7 @@ describe('<Requests />', () => {
     jest.useFakeTimers();
     expect.assertions(6);
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=created_at%3Adesc`, mockOnce({
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=created_at%3Adesc`, mockOnce({
       status: 200,
       body: {
         meta: { count: 1, limit: 50, offset: 0 },
@@ -156,11 +156,11 @@ describe('<Requests />', () => {
     });
     wrapper.update();
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name&limit=50&offset=0`
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name&page_size=50&page=1`
     + `&sort_by=created_at%3Adesc`,
     mockOnce((req, res) => {
       expect(req.url().query).toEqual({
-        'filter[name][contains_i]': 'some-name', limit: '50', offset: '0', persona: 'approver', sort_by: 'created_at:desc'
+        'filter[name][contains_i]': 'some-name', page_size: '50', page: '1', persona: 'approver', sort_by: 'created_at:desc'
       });
       return res.status(200).body({
         meta: { count: 1, limit: 50, offset: 0 },
@@ -188,13 +188,13 @@ describe('<Requests />', () => {
     apiClientMock.get(
       // eslint-disable-next-line max-len
       `${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name&filter%5Brequester_name%5D%5Bcontains_i%5D=some-requester`
-       + `&limit=50&offset=0&sort_by=created_at%3Adesc`,
+       + `&page_size=50&page=1&sort_by=created_at%3Adesc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
           'filter[name][contains_i]': 'some-name',
           'filter[requester_name][contains_i]': 'some-requester',
-          limit: '50',
-          offset: '0',
+          page_size: '50',
+          page: '1',
           persona: 'approver',
           sort_by: 'created_at:desc'
         });
@@ -225,13 +225,13 @@ describe('<Requests />', () => {
       `${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name`
       + '&filter%5Brequester_name%5D%5Bcontains_i%5D=some-requester'
       + '&filter%5Bdecision%5D%5Beq%5D%5B%5D=canceled&filter%5Bdecision%5D%5Beq%5D%5B%5D=approved'
-      + '&limit=50&offset=0&sort_by=created_at%3Adesc',
+      + '&pae_size=50&page=1&sort_by=created_at%3Adesc',
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
           'filter[name][contains_i]': 'some-name',
           'filter[requester_name][contains_i]': 'some-requester',
           'filter[decision][eq][]': [ 'canceled', 'approved' ],
-          limit: '50',
+          page_size: '50',
           offset: '0',
           persona: 'approver',
           sort_by: 'created_at:desc'
@@ -264,7 +264,7 @@ describe('<Requests />', () => {
       `${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name`
       + `&filter%5Brequester_name%5D%5Bcontains_i%5D=some-requester`
       + '&filter%5Bdecision%5D%5Beq%5D%5B%5D=approved'
-      + '&limit=50&offset=0&sort_by=created_at%3Adesc',
+      + '&page_size=50&page=10&sort_by=created_at%3Adesc',
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
           'filter[name][contains_i]': 'some-name',
@@ -295,7 +295,7 @@ describe('<Requests />', () => {
     apiClientMock.get(
       `${APPROVAL_API_BASE}/requests/?persona=approver&filter%5Bname%5D%5Bcontains_i%5D=some-name`
       + `&filter%5Brequester_name%5D%5Bcontains_i%5D=some-requester`
-      + '&limit=50&offset=0&sort_by=created_at%3Adesc',
+      + '&page_size=50&page=1&sort_by=created_at%3Adesc',
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
           'filter[name][contains_i]': 'some-name',
@@ -323,11 +323,11 @@ describe('<Requests />', () => {
     wrapper.update();
 
     apiClientMock.get(
-      `${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=created_at%3Adesc`,
+      `${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=created_at%3Adesc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
-          limit: '50',
-          offset: '0',
+          page_size: '50',
+          page: '1',
           persona: 'approver',
           sort_by: 'created_at:desc'
         });
@@ -356,7 +356,7 @@ describe('<Requests />', () => {
     jest.useFakeTimers();
     expect.assertions(2);
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=created_at%3Adesc`, mockOnce({
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=created_at%3Adesc`, mockOnce({
       status: 200,
       body: {
         meta: { count: 1, limit: 50, offset: 0 },
@@ -374,10 +374,10 @@ describe('<Requests />', () => {
     });
     wrapper.update();
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=10&offset=0&sort_by=created_at%3Adesc`,
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=10&page=1&sort_by=created_at%3Adesc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
-          limit: '10', offset: '0', persona: 'approver', sort_by: 'created_at:desc'
+          page_size: '10', page: '0', persona: 'approver', sort_by: 'created_at:desc'
         });
         return res.status(200).body({
           meta: { count: 30, limit: 10, offset: 0 },
@@ -399,10 +399,10 @@ describe('<Requests />', () => {
     });
     wrapper.update();
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=10&offset=10&sort_by=created_at%3Adesc`,
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=10&page=10&sort_by=created_at%3Adesc`,
       mockOnce((req, res) => {
         expect(req.url().query).toEqual({
-          limit: '10', offset: '10', persona: 'approver', sort_by: 'created_at:desc'
+          page_size: '10', page: '10', persona: 'approver', sort_by: 'created_at:desc'
         });
         return res.status(200).body({
           meta: { count: 30, limit: 10, offset: 0 },
@@ -424,7 +424,7 @@ describe('<Requests />', () => {
   });
 
   it('should render table empty state', async () => {
-    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=created_at%3Adesc`, mockOnce({
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=created_at%3Adesc`, mockOnce({
       status: 200,
       body: {
         meta: { count: 0, limit: 50, offset: 0 },
@@ -466,7 +466,7 @@ describe('<Requests />', () => {
     };
 
     beforeEach(() => {
-      apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&limit=50&offset=0&sort_by=created_at%3Adesc`, mockOnce({
+      apiClientMock.get(`${APPROVAL_API_BASE}/requests/?persona=approver&page_size=50&page=1&sort_by=created_at%3Adesc`, mockOnce({
         status: 200,
         body: {
           meta: { count: 1, limit: 50, offset: 0 },
