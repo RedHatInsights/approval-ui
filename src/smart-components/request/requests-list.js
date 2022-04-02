@@ -84,7 +84,6 @@ const requestsListState = (state, action) => {
 };
 
 const RequestsList = ({ persona, indexpath, actionResolver }) => {
-  console.log('Debug - persona: ', persona);
   const [ limit, setLimit ] = useState(defaultSettings.limit);
   const [ offset, setOffset ] = useState(1);
   const { requests: { data, meta, count }, sortBy, filterValue } = useSelector(
@@ -92,7 +91,6 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
     shallowEqual
   );
   const metaInfo = meta || { count, limit, offset };
-  console.log('Debug - data, metaInfo: ', data, metaInfo);
   const [{ nameValue, isFetching, isFiltering, requesterValue, rows }, stateDispatch ] = useReducer(
     requestsListState,
     initialState(filterValue.name, filterValue.requester)
@@ -108,7 +106,6 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
     intl.formatMessage(requestsMessages.emptyAllRequestsDescription) : intl.formatMessage(requestsMessages.emptyRequestsDescription);
 
   const updateRequests = (pagination) => {
-    console.log('Debug updateRequests: pagination, userRoles, isApprovalApprover, persona', pagination, userRoles, isApprovalApprover, persona);
     if (!isApprovalApprover && persona === APPROVAL_APPROVER_PERSONA) {
       stateDispatch({ type: 'setFetching', payload: false });
       return;
