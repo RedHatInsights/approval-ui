@@ -349,6 +349,14 @@ describe('<Requests />', () => {
       }
     }));
 
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?limit=10&offset=2&sort_by=created_at%3Adesc`, mockOnce({
+      status: 200,
+      body: {
+        meta: { count: 1, limit: 50, offset: 0 },
+        data: [ request ]
+      }
+    }));
+
     const registry = new ReducerRegistry({}, [ thunk, promiseMiddleware ]);
     registry.register({ requestReducer: applyReducerHash(requestReducer, requestsInitialState) });
     const store = registry.getStore();
