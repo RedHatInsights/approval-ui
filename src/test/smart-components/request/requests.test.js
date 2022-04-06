@@ -339,9 +339,17 @@ describe('<Requests />', () => {
 
   it('should paginate requests', async () => {
     jest.useFakeTimers();
-    expect.assertions(2);
+    expect.assertions(1);
 
     apiClientMock.get(`${APPROVAL_API_BASE}/requests/?limit=50&offset=0&sort_by=created_at%3Adesc`, mockOnce({
+      status: 200,
+      body: {
+        meta: { count: 1, limit: 50, offset: 0 },
+        data: [ request ]
+      }
+    }));
+
+    apiClientMock.get(`${APPROVAL_API_BASE}/requests/?limit=10&offset=2&sort_by=created_at%3Adesc`, mockOnce({
       status: 200,
       body: {
         meta: { count: 1, limit: 50, offset: 0 },

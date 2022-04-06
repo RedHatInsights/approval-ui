@@ -31,7 +31,7 @@ const filterQuery = (filterValue) => {
 
 export function fetchRequests(filter = {}, pagination = defaultSettings, persona = undefined, sortBy) {
   const personaQuery = persona ? `&persona=${persona}` : '';
-  const paginationQuery = `&limit=${Math.max(pagination.limit, 10)}&offset=${pagination.offset}`;
+  const paginationQuery = `&page_size=${Math.max(pagination.limit, 10)}&page=${pagination.offset || 1}`;
   const sortQuery = `&sort_by=${sortPropertiesMapper(sortBy.property)}:${sortBy.direction}`;
   const fetchUrl = `${APPROVAL_API_BASE}/requests/?${personaQuery}&${filterQuery(filter)}${paginationQuery}${sortQuery}`;
   return getAxiosInstance()({ method: 'get', url: fetchUrl });

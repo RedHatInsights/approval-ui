@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useReducer, useRef } from 'react';
+import React, { Fragment, useEffect, useReducer, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Route, Link, useHistory } from 'react-router-dom';
 import { ToolbarGroup, ToolbarItem, Button, Checkbox } from '@patternfly/react-core';
@@ -126,8 +126,11 @@ const Workflows = () => {
     ({ workflowReducer: { workflows, filterValue: filterValueRedux }}) => ({ workflows, filterValueRedux })
     , shallowEqual
   );
-  const data = workflows?.data || workflows?.results;
-  const meta = workflows?.meta || { count: workflows.count };
+  const [ limit, setLimit ] = useState(defaultSettings.limit);
+  const [ offset, setOffset ] = useState(1);
+
+  const data = workflows?.data;
+  const meta = workflows?.meta || { count: workflows.count, limit, offset };
 
   const [{ filterValue, isFetching, isFiltering, selectedWorkflows, selectedAll, rows }, stateDispatch ] = useReducer(
     workflowsListState,
@@ -254,6 +257,8 @@ const Workflows = () => {
           titlePlural={ intl.formatMessage(worfklowMessages.approvalProcesses) }
           titleSingular={ intl.formatMessage(worfklowMessages.approvalProcess) }
           pagination={ meta }
+          setOffset={ setOffset }
+          setLimit={ setLimit }
           toolbarButtons={ toolbarButtons }
           filterValue={ filterValue }
           onFilterChange={ handleFilterChange }

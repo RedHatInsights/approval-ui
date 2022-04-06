@@ -359,7 +359,7 @@ describe('<Workflows />', () => {
   });
 
   it('should paginate requests', async () => {
-    expect.assertions(2);
+    expect.assertions(1);
 
     apiClientMock.get(
       `${APPROVAL_API_BASE}/workflows/?filter%5Bname%5D%5Bcontains_i%5D=&limit=50&offset=0`,

@@ -16,11 +16,15 @@ describe('<TableToolbarView />', () => {
   </IntlProvider>);
 
   beforeEach(() => {
+    global.localStorage.setItem('catalog_standalone', true);
+    global.localStorage.setItem('user', 'testUser');
     initialProps = {
       createRows: () => [],
       rows: [],
       columns: [],
       fetchData: () => new Promise(resolve => resolve([])),
+      setOffset: jest.fn(),
+      setLimit: jest.fn(),
       pagination: {
         limit: 50,
         offset: 0,
@@ -30,6 +34,10 @@ describe('<TableToolbarView />', () => {
     };
   });
 
+  afterEach(() => {
+    global.localStorage.setItem('catalog_standalone', false);
+    global.localStorage.removeItem('user');
+  });
   it('should display the table', async done => {
     let wrapper;
     const rows = [{
@@ -140,7 +148,7 @@ describe('<TableToolbarView />', () => {
     });
 
     setTimeout(() => {
-      expect(request).toHaveBeenCalledWith({ count: 51, limit: 50, offset: 50 });
+      expect(request).toHaveBeenCalledWith({ count: 51, limit: 50, offset: 2 });
       done();
     }, 251);
   });

@@ -1,5 +1,5 @@
 
-import React, { Fragment, useEffect, useReducer, useContext } from 'react';
+import React, { Fragment, useEffect, useReducer, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Button } from '@patternfly/react-core';
@@ -31,6 +31,7 @@ import commonMessages from '../../messages/common.message';
 import { Route } from 'react-router-dom';
 import routesLinks from '../../constants/routes';
 import ActionModal from './action-modal';
+import { defaultSettings } from '../../helpers/shared/pagination';
 
 const columns = (intl) => [{
   title: intl.formatMessage(requestsMessages.requestsIdColumn),
@@ -83,10 +84,13 @@ const requestsListState = (state, action) => {
 };
 
 const RequestsList = ({ persona, indexpath, actionResolver }) => {
-  const { requests: { data, meta }, sortBy, filterValue } = useSelector(
+  const [ limit, setLimit ] = useState(defaultSettings.limit);
+  const [ offset, setOffset ] = useState(1);
+  const { requests: { data, meta, count }, sortBy, filterValue } = useSelector(
     ({ requestReducer: { requests, sortBy, filterValue }}) => ({ requests, sortBy, filterValue }),
     shallowEqual
   );
+  const metaInfo = meta || { count, limit, offset };
   const [{ nameValue, isFetching, isFiltering, requesterValue, rows }, stateDispatch ] = useReducer(
     requestsListState,
     initialState(filterValue.name, filterValue.requester)
@@ -116,13 +120,13 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
   const routes = () => <Fragment>
     <Route exact path={ routesLinks.requests.comment } render={ props => <ActionModal { ...props }
       actionType={ 'Comment' }
-      postMethod={ () => updateRequests(meta) }
+      postMethod={ () => updateRequests(metaInfo) }
     /> }/>
     <Route exact path={ routesLinks.requests.approve } render={ props => <ActionModal { ...props } actionType={ 'Approve' }
-      postMethod={ () => updateRequests(meta) }
+      postMethod={ () => updateRequests(metaInfo) }
     /> } />
     <Route exact path={ routesLinks.requests.deny } render={ props => <ActionModal { ...props } actionType={ 'Deny' }
-      postMethod={ () => updateRequests(meta) }
+      postMethod={ () => updateRequests(metaInfo) }
     /> } />
   </Fragment>;
 
@@ -200,7 +204,9 @@ const RequestsList = ({ persona, indexpath, actionResolver }) => {
         routes={ routes }
         titlePlural={ intl.formatMessage(requestsMessages.requests) }
         titleSingular={ intl.formatMessage(requestsMessages.request) }
-        pagination={ meta }
+        pagination={ metaInfo }
+        setLimit={ setLimit }
+        setOffset={ setOffset }
         handlePagination={ updateRequests }
         filterValue={ nameValue }
         onFilterChange={ (value) => handleFilterChange(value, 'name') }

@@ -53,7 +53,7 @@ describe('Request actions', () => {
       type: `${FETCH_REQUESTS}_FULFILLED`
     }];
     apiClientMock.get(
-      APPROVAL_API_BASE + '/requests/?filter%5Bname%5D%5Bcontains_i%5D=some-name&limit=10&offset=0&sort_by=name%3Adesc',
+      APPROVAL_API_BASE + '/requests/?filter%5Bname%5D%5Bcontains_i%5D=some-name&page_size=10&page=1&sort_by=name%3Adesc',
       mockOnce({
         body: {
           data: [{
@@ -93,7 +93,7 @@ describe('Request actions', () => {
 
     }) ]);
 
-    apiClientMock.get(APPROVAL_API_BASE + '/requests/?limit=50&offset=0&sort_by=name%3Adesc', mockOnce({
+    apiClientMock.get(APPROVAL_API_BASE + '/requests/?page_size=50&page=1&sort_by=name%3Adesc', mockOnce({
       status: 500
     }));
 
